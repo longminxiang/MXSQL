@@ -30,7 +30,7 @@
 - (void)buttonTouched:(id)sender
 {
     Houses *house = [Houses new];
-    house.index = 101;
+    house.iindex = 101;
     [house freshWithIndex];
     
     house.value = 2000;
@@ -63,7 +63,7 @@
 //    [Houses save:hhs withoutFields:nil completion:^{
 //        [Houses query:^(NSArray *objects) {
 //            for (Houses *ho in objects) {
-//                NSLog(@"%@,%d,%lld",ho.name,ho.value1,ho.index);
+//                NSLog(@"%@,%d,%lld",ho.name,ho.value1,ho.iindex);
 //            }
 //        } field:nil conditions:nil];
 //    }];

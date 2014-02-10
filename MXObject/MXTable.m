@@ -39,7 +39,6 @@
     table.ignoreFields = [class ignoreFields];
     table.fields = [MXField fieldsNameForClass:class ignoreFields:table.ignoreFields];
     table.keyField = [table fieldForKey:[class keyField]];
-    
     [shareTable.tableCache setObject:table forKey:cacheKey];
     
     return table;

@@ -11,7 +11,7 @@
 #import "FMDatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
 
-#define MXSQL_INDEX @"index"
+#define MXSQL_INDEX @"iindex"
 
 @interface MXSQL : NSObject
 

@@ -11,7 +11,7 @@
 
 @interface NSObject (MXSQL)
 
-@property (nonatomic, assign) int64_t index;
+@property (nonatomic, assign) int64_t iindex;
 
 + (NSString *)keyField;
 + (NSArray *)ignoreFields;

@@ -12,23 +12,24 @@
 
 #pragma mark === index ===
 
-@dynamic index;
+@dynamic iindex;
 
-static const char *indexKey = "index";
+static const char *iindexKey = "iindex";
 
-- (int64_t)index
+- (int64_t)iindex
 {
-    return [objc_getAssociatedObject(self, indexKey) longLongValue];
+    return [objc_getAssociatedObject(self, iindexKey) longLongValue];
 }
 
-- (void)setIndex:(int64_t)index
+- (void)setIindex:(int64_t)iindex
 {
-    objc_setAssociatedObject(self, indexKey, [NSNumber numberWithLongLong:index], OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, iindexKey, [NSNumber numberWithLongLong:iindex], OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (void)setvalueWithFields:(NSArray *)fields
 {
     for (MXField *af in fields) {
+        if ([af.value isKindOfClass:[NSNull class]]) continue;
         @try {
             NSString *type = [[self class] typeOfField:af.name];
             if ([type isEqualToString:MXTDate]) {
@@ -72,7 +73,15 @@ static const char *indexKey = "index";
 
 - (MXTable *)table
 {
-    return [MXTable tableForObject:self];
+    MXTable *table = [MXTable tableForObject:self];
+    if (!table.keyField && self.iindex) {
+        MXField *field = [MXField new];
+        field.name = MXSQL_INDEX;
+        field.type = MXTInt;
+        field.value = [NSNumber numberWithLongLong:self.iindex];
+        table.keyField = field;
+    }
+    return table;
 }
 
 #pragma mark === save ===
@@ -99,7 +108,7 @@ static const char *indexKey = "index";
         }
     }
     int64_t index = [[MXSQL sharedMXSQL] save:table];
-    self.index = index;
+    self.iindex = index;
     return index;
 }
 
@@ -127,7 +136,7 @@ static const char *indexKey = "index";
 
 - (BOOL)freshWithIndex
 {
-    if (self.index <= 0) return NO;
+    if (self.iindex <= 0) return NO;
     return [self freshWithField:MXSQL_INDEX];
     
     return YES;

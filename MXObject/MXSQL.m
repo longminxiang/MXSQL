@@ -7,7 +7,7 @@
 
 #import "MXSQL.h"
 
-#define MXSQL_DEFAULT_DB_PATH @"MXObject/MXDB"
+#define MXSQL_DEFAULT_DB_PATH @"MXSQL/MXDB"
 
 @interface MXSQL ()
 
@@ -307,7 +307,6 @@
             count = [rs intForColumnIndex:0];
         }
         [rs close];
-        [db close];
     }];
     return count;
 }
