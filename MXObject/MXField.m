@@ -110,4 +110,12 @@
     return fieldArray;
 }
 
++ (NSString *)typeOfField:(NSString *)fieldName class:(Class)class
+{
+    objc_property_t property = class_getProperty(class, [fieldName UTF8String]);
+    NSString *type = [self sqlTypeFromProperty:property];
+    return type;
+}
+
+
 @end

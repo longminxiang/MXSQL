@@ -23,6 +23,8 @@
 
 - (int64_t)save:(MXTable *)table;
 
+- (NSArray *)fresh:(MXTable *)table condition:(NSString *)conditionString;
+
 - (NSArray *)query:(MXTable *)table field:(NSString *)field condition:(NSString *)conditionString;
 
 - (int)count:(NSString *)table condition:(NSString *)conditionString;

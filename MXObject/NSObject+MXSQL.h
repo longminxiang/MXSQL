@@ -11,14 +11,22 @@
 
 @interface NSObject (MXSQL)
 
+@property (nonatomic, assign) int64_t index;
+
 + (NSString *)keyField;
 + (NSArray *)ignoreFields;
 
 - (int64_t)save;
 - (int64_t)saveWithoutFields:(NSArray *)fields;
 
+- (BOOL)freshWithKeyField;
+- (BOOL)freshWithIndex;
+- (BOOL)freshWithField:(NSString *)fieldName;
+
 + (void)save:(NSArray *)objects completion:(void (^)())completion;
 + (void)save:(NSArray *)objects withoutFields:(NSArray *)fields completion:(void (^)())completion;
+
++ (void)query:(void (^)(id object))completion keyFieldValue:(id)value;
 
 + (void)queryAll:(void (^)(NSArray *objects))completion;
 

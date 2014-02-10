@@ -28,5 +28,6 @@
 
 + (NSMutableArray *)fieldsNameForClass:(Class)class ignoreFields:(NSArray *)ignoreFields;
 
++ (NSString *)typeOfField:(NSString *)fieldName class:(Class)class;
 
 @end

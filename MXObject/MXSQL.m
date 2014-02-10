@@ -17,7 +17,8 @@
 @property (nonatomic, strong) NSMutableArray *tableNames;
 @property (nonatomic, strong) NSMutableDictionary *fieldNameDics;
 
-@property (nonatomic, strong) FMDatabaseQueue *saveQueue, *queryQueue, *countQueue, *deleteQueue;
+@property (nonatomic, strong) FMDatabaseQueue *saveQueue, *queryQueue, *freshQueue;
+@property (nonatomic, strong) FMDatabaseQueue *countQueue, *deleteQueue;
 
 @end
 
@@ -65,6 +66,7 @@
     self.queryQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
     self.countQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
     self.deleteQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
+    self.freshQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
     
     [self.tableNames removeAllObjects];
     [self.fieldNameDics removeAllObjects];
@@ -182,7 +184,7 @@
 //数据是否已存在
 - (int64_t)table:(MXTable *)table inDB:(FMDatabase *)db
 {
-    NSInteger exist = -1;
+    int64_t exist = -1;
     if (!table.keyField || [table.keyField.name isEqualToString:@""]) {
         return exist;
     }
@@ -241,6 +243,16 @@
 }
 
 #pragma mark === query ===
+
+- (NSArray *)fresh:(MXTable *)table condition:(NSString *)conditionString
+{
+    if (!table) return nil;
+    __block NSArray *result;
+    [self.freshQueue inDatabase:^(FMDatabase *db) {
+        result = [self query:table field:nil inDB:db condition:conditionString];
+    }];
+    return result;
+}
 
 - (NSArray *)query:(MXTable *)table field:(NSString *)field condition:(NSString *)conditionString
 {
