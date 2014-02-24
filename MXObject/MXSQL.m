@@ -154,7 +154,7 @@
     if (noneFields.count) {
         for (int i = 0; i < noneFields.count; i++) {
             MXField *field = [noneFields objectAtIndex:i];
-            NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN '%@' %@ DEFAULT '%@'",table.name,field.name,field.type,field.value];
+            NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN '%@' %@ ",table.name,field.name,field.type];
             [db executeUpdate:sql];
         }
         NSArray *fields = [self fieldNamesFromTable:table.name inDB:db];
