@@ -245,7 +245,7 @@ NSString *conditionString = [MXCondition conditionStringWithConditions:condition
         else {
             [object setvalueWithFields:afields];
         }
-        [objects addObject:object];
+        if (object) [objects addObject:object];
     }
     return objects;
 }

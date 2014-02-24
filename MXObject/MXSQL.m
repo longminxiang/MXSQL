@@ -134,7 +134,12 @@
 - (void)updateTable:(MXTable *)table inDB:(FMDatabase *)db
 {
     NSArray *ofieldNames = [self.fieldNameDics objectForKey:table.name];
-    if (!ofieldNames.count) return;
+    if (!ofieldNames.count) {
+        [self.tableNames addObject:table.name];
+        NSArray *fields = [self fieldNamesFromTable:table.name inDB:db];
+        [self.fieldNameDics setObject:fields forKey:table.name];
+        return;
+    }
     
     NSMutableArray *noneFields = [NSMutableArray new];
     for (MXField *field in table.fields) {
