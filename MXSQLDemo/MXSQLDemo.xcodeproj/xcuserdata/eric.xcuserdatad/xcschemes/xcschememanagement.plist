@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>MXObjectDemo.xcscheme</key>
+		<key>MXSQLDemo.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>E9A14FA1180CFA25008FEA8C</key>
+		<key>07F7694D1939747500BF441D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>07F769681939747500BF441D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

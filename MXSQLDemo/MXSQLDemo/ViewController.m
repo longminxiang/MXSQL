@@ -67,7 +67,7 @@
                 House *hs = (House *)objects[i];
                 NSLog(@"gaofusuai %lld bought house %lld",gaofusuai.iindex,hs.iindex);
             }
-        } conditions:[MXCondition whereKey:@"ownerIndex" equalTo:[NSNumber numberWithInt:gaofusuai.iindex]], nil];
+        } conditions:[MXCondition whereKey:@"ownerIndex" equalTo:@(gaofusuai.iindex)], nil];
     }];
 
     

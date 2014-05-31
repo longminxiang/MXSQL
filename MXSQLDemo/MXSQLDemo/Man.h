@@ -20,7 +20,7 @@
 
 @interface House : NSObject
 
-@property (nonatomic, assign) int ownerIndex;
+@property (nonatomic, assign) int64_t ownerIndex;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) int value;
 

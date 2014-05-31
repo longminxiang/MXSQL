@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9A14FA1180CFA25008FEA8C"
-               BuildableName = "MXObjectDemo.app"
-               BlueprintName = "MXObjectDemo"
-               ReferencedContainer = "container:MXObjectDemo.xcodeproj">
+               BlueprintIdentifier = "07F7694D1939747500BF441D"
+               BuildableName = "MXSQLDemo.app"
+               BlueprintName = "MXSQLDemo"
+               ReferencedContainer = "container:MXSQLDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,14 +28,24 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "07F769681939747500BF441D"
+               BuildableName = "MXSQLDemoTests.xctest"
+               BlueprintName = "MXSQLDemoTests"
+               ReferencedContainer = "container:MXSQLDemo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9A14FA1180CFA25008FEA8C"
-            BuildableName = "MXObjectDemo.app"
-            BlueprintName = "MXObjectDemo"
-            ReferencedContainer = "container:MXObjectDemo.xcodeproj">
+            BlueprintIdentifier = "07F7694D1939747500BF441D"
+            BuildableName = "MXSQLDemo.app"
+            BlueprintName = "MXSQLDemo"
+            ReferencedContainer = "container:MXSQLDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -51,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9A14FA1180CFA25008FEA8C"
-            BuildableName = "MXObjectDemo.app"
-            BlueprintName = "MXObjectDemo"
-            ReferencedContainer = "container:MXObjectDemo.xcodeproj">
+            BlueprintIdentifier = "07F7694D1939747500BF441D"
+            BuildableName = "MXSQLDemo.app"
+            BlueprintName = "MXSQLDemo"
+            ReferencedContainer = "container:MXSQLDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9A14FA1180CFA25008FEA8C"
-            BuildableName = "MXObjectDemo.app"
-            BlueprintName = "MXObjectDemo"
-            ReferencedContainer = "container:MXObjectDemo.xcodeproj">
+            BlueprintIdentifier = "07F7694D1939747500BF441D"
+            BuildableName = "MXSQLDemo.app"
+            BlueprintName = "MXSQLDemo"
+            ReferencedContainer = "container:MXSQLDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
