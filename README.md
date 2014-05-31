@@ -1,14 +1,14 @@
-#MXObject
+#MXSQL
 
-save your object easily.
+save your object to sqlite easily.
 
 This is a sql data to NSObject mapper base on [FMDB](https://github.com/ccgus/fmdb).
 
 #Usage
 
-let your object class inherit MXObject
+	#import "NSObject+MXSQL.h"
 
-	@interface Man : MXObject
+	@interface Man : NSObject
 
 	@property (nonatomic, copy) NSString *name;
 	@property (nonatomic, assign) int age;
