@@ -25,4 +25,4 @@ and than you can new one and save it
 	
 #License
 
-MXObject is available under the MIT license. See the LICENSE file for more info. 
+MXSQL is available under the MIT license. See the LICENSE file for more info. 
