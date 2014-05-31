@@ -6,17 +6,36 @@
 //
 
 #import "MXTable.h"
-#import "NSObject+MXSQL.h"
 
-@interface MXTable ()
-
-@property (nonatomic, strong) NSCache *tableCache;
-
-@end
+#pragma mark === MXTable ===
 
 @implementation MXTable
 
-+ (instancetype)shareTable
+- (instancetype)clone
+{
+    if (!self) return nil;
+    MXTable *table = [MXTable new];
+    table.name = self.name;
+    table.keyField = self.keyField;
+    NSArray *fields;
+    if (self.fields) fields = [NSArray arrayWithArray:self.fields];
+    table.fields = fields;
+    return table;
+}
+
+@end
+
+#pragma mark === MXTableCaache ===
+
+@interface MXTableCache ()
+
+@property (nonatomic, strong) NSCache *classTableCache;
+
+@end
+
+@implementation MXTableCache
+
++ (instancetype)shareTableCache
 {
     static id object;
     static dispatch_once_t onceToken;
@@ -26,41 +45,76 @@
     return object;
 }
 
-+ (instancetype)tableForClass:(Class)class
+- (NSCache *)classTableCache
 {
-    NSString *className = [class description];
-    MXTable *shareTable = [self shareTable];
-    NSString *cacheKey = [NSString stringWithFormat:@"MXTableCache_%@",className];
-    id cache = [shareTable.tableCache objectForKey:cacheKey];
-    if (cache) return cache;
-    
-    MXTable *table = [MXTable new];
-    table.name = className;
-    table.ignoreFields = [class ignoreFields];
-    table.fields = [MXField fieldsNameForClass:class ignoreFields:table.ignoreFields];
-    table.keyField = [table fieldForKey:[class keyField]];
-    [shareTable.tableCache setObject:table forKey:cacheKey];
-    
+    if (!_classTableCache) _classTableCache = [NSCache new];
+    return _classTableCache;
+}
+
++ (void)setTableCache:(MXTable *)table forClass:(Class)class
+{
+    [[self shareTableCache] setTableCache:table forClass:class];
+}
+
+- (void)setTableCache:(MXTable *)table forClass:(Class)class
+{
+    NSString *key = [self cacheKeyForClass:class];
+    [self.classTableCache setObject:table forKey:key];
+}
+
++ (MXTable *)tableCacheForClass:(Class)class
+{
+    return [[self shareTableCache] tableCacheForClass:class];
+}
+
+- (MXTable *)tableCacheForClass:(Class)class
+{
+    NSString *key = [self cacheKeyForClass:class];
+    MXTable *table = [self.classTableCache objectForKey:key];
     return table;
 }
 
-+ (instancetype)tableForObject:(id)object
+- (NSString *)cacheKeyForClass:(Class)class
 {
-    Class class = [object class];
-    MXTable *table = [self tableForClass:class];
-    table.fields = [MXField fieldsForObject:object ignoreFields:table.ignoreFields];
-    table.keyField = [table fieldForKey:[class keyField]];
-    return table;
-}
-
-- (MXField *)fieldForKey:(NSString *)key
-{
-    for (MXField *field in self.fields) {
-        if ([field.name isEqualToString:key]) {
-            return field;
-        }
-    }
-    return nil;
+    if (!class) return nil;
+    NSString *cacheKey = [NSString stringWithFormat:@"MXTableCache_%@",[class description]];
+    return cacheKey;
 }
 
 @end
+
+#pragma mark === NSObject Category for MXTable ===
+
+@implementation NSObject (MXTable)
+
++ (NSString *)keyField
+{
+    return nil;
+}
+
++ (MXTable *)mxTable
+{
+    MXTable *table = [MXTableCache tableCacheForClass:self];
+    if (table) return table;
+    
+    table = [MXTable new];
+    table.name = [self description];
+    table.fields = [self mxFields];
+    table.keyField = [self mxFieldWithName:[self keyField]];
+    
+    [MXTableCache setTableCache:table forClass:self];
+    
+    return table;
+}
+
+- (MXTable *)mxTable
+{
+    MXTable *table = [[self class] mxTable];
+    table.fields = [self mxFields];
+    table.keyField = [self mxFieldWithName:[[self class] keyField]];
+    return table;
+}
+
+@end
+
+

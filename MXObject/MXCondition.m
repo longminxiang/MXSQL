@@ -22,11 +22,27 @@ typedef enum{
 
 @implementation MXCondition
 
++ (MXCondition *)whereKey:(NSString *)key between:(id)object and:(id)anobject
+{
+    MXCondition *condition = [MXCondition new];
+    condition.type = MXConditionWhere;
+    condition.conditionString = [NSString stringWithFormat:@"\"%@\" between '%@' and '%@'",key,object,anobject];
+    return condition;
+}
+
 + (MXCondition *)whereKey:(NSString *)key equalTo:(id)object
 {
     MXCondition *condition = [MXCondition new];
     condition.type = MXConditionWhere;
     condition.conditionString = [NSString stringWithFormat:@"\"%@\" %@ '%@'",key,@"=",object];
+    return condition;
+}
+
++ (MXCondition *)whereKey:(NSString *)key notEqualTo:(id)object
+{
+    MXCondition *condition = [MXCondition new];
+    condition.type = MXConditionWhere;
+    condition.conditionString = [NSString stringWithFormat:@"\"%@\" %@ '%@'",key,@"!=",object];
     return condition;
 }
 
@@ -128,6 +144,19 @@ typedef enum{
         conditionString = [conditionString stringByAppendingString:limitCondition.conditionString];
     }
     if (!conditionString || [conditionString isKindOfClass:[NSNull class]]) conditionString = @"";
+    return conditionString;
+}
+
++ (NSString *)orEqualConditionStringForKey:(NSString *)key values:(NSArray *)values
+{
+    NSMutableArray *conditions = [NSMutableArray new];
+    for (int i = 0; i < values.count; i++) {
+        id value = values[i];
+        MXCondition *condition = [MXCondition whereKey:key equalTo:value];
+        condition.isOr = YES;
+        [conditions addObject:condition];
+    }
+    NSString *conditionString = [MXCondition conditionStringWithConditions:conditions];
     return conditionString;
 }
 

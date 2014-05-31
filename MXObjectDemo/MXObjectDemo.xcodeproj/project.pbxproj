@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0750AA8D1887DE9B00FBAE12 /* MXField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0750AA8C1887DE9B00FBAE12 /* MXField.m */; };
-		0750AA961887E1C500FBAE12 /* NSObject+MXSQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0750AA951887E1C500FBAE12 /* NSObject+MXSQL.m */; };
-		0764584C18910FB4000B994F /* MXSQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0764584B18910FB4000B994F /* MXSQL.m */; };
-		07809769189645C7000C61C6 /* MXTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 07809768189645C7000C61C6 /* MXTable.m */; };
+		07F7694019396EF100BF441D /* MXCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F7693719396EF100BF441D /* MXCondition.m */; };
+		07F7694119396EF100BF441D /* MXField.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F7693919396EF100BF441D /* MXField.m */; };
+		07F7694219396EF100BF441D /* MXSQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F7693B19396EF100BF441D /* MXSQL.m */; };
+		07F7694319396EF100BF441D /* MXTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F7693D19396EF100BF441D /* MXTable.m */; };
+		07F7694419396EF100BF441D /* NSObject+MXSQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F7693F19396EF100BF441D /* NSObject+MXSQL.m */; };
 		E9A14FA6180CFA25008FEA8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9A14FA5180CFA25008FEA8C /* UIKit.framework */; };
 		E9A14FA8180CFA25008FEA8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9A14FA7180CFA25008FEA8C /* Foundation.framework */; };
 		E9A14FAA180CFA25008FEA8C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9A14FA9180CFA25008FEA8C /* CoreGraphics.framework */; };
@@ -27,19 +28,20 @@
 		E9A14FDE180CFA6A008FEA8C /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A14FD1180CFA6A008FEA8C /* FMDatabasePool.m */; };
 		E9A14FDF180CFA6A008FEA8C /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A14FD3180CFA6A008FEA8C /* FMDatabaseQueue.m */; };
 		E9A14FE1180CFA6A008FEA8C /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A14FD6180CFA6A008FEA8C /* FMResultSet.m */; };
-		E9A14FE2180CFA6A008FEA8C /* MXCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A14FD9180CFA6A008FEA8C /* MXCondition.m */; };
 		E9A14FE5180CFA89008FEA8C /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E9A14FE4180CFA89008FEA8C /* libsqlite3.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0750AA8B1887DE9B00FBAE12 /* MXField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXField.h; sourceTree = "<group>"; };
-		0750AA8C1887DE9B00FBAE12 /* MXField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXField.m; sourceTree = "<group>"; };
-		0750AA941887E1C500FBAE12 /* NSObject+MXSQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MXSQL.h"; sourceTree = "<group>"; };
-		0750AA951887E1C500FBAE12 /* NSObject+MXSQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MXSQL.m"; sourceTree = "<group>"; };
-		0764584A18910FB4000B994F /* MXSQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSQL.h; sourceTree = "<group>"; };
-		0764584B18910FB4000B994F /* MXSQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSQL.m; sourceTree = "<group>"; };
-		07809767189645C7000C61C6 /* MXTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXTable.h; sourceTree = "<group>"; };
-		07809768189645C7000C61C6 /* MXTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXTable.m; sourceTree = "<group>"; };
+		07F7693619396EF100BF441D /* MXCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCondition.h; sourceTree = "<group>"; };
+		07F7693719396EF100BF441D /* MXCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCondition.m; sourceTree = "<group>"; };
+		07F7693819396EF100BF441D /* MXField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXField.h; sourceTree = "<group>"; };
+		07F7693919396EF100BF441D /* MXField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXField.m; sourceTree = "<group>"; };
+		07F7693A19396EF100BF441D /* MXSQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSQL.h; sourceTree = "<group>"; };
+		07F7693B19396EF100BF441D /* MXSQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSQL.m; sourceTree = "<group>"; };
+		07F7693C19396EF100BF441D /* MXTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXTable.h; sourceTree = "<group>"; };
+		07F7693D19396EF100BF441D /* MXTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXTable.m; sourceTree = "<group>"; };
+		07F7693E19396EF100BF441D /* NSObject+MXSQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MXSQL.h"; sourceTree = "<group>"; };
+		07F7693F19396EF100BF441D /* NSObject+MXSQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MXSQL.m"; sourceTree = "<group>"; };
 		E9A14FA2180CFA25008FEA8C /* MXObjectDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MXObjectDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9A14FA5180CFA25008FEA8C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E9A14FA7180CFA25008FEA8C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -67,8 +69,6 @@
 		E9A14FD3180CFA6A008FEA8C /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		E9A14FD5180CFA6A008FEA8C /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		E9A14FD6180CFA6A008FEA8C /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		E9A14FD8180CFA6A008FEA8C /* MXCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCondition.h; sourceTree = "<group>"; };
-		E9A14FD9180CFA6A008FEA8C /* MXCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCondition.m; sourceTree = "<group>"; };
 		E9A14FE4180CFA89008FEA8C /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -87,11 +87,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07F7693519396EF100BF441D /* MXObject */ = {
+			isa = PBXGroup;
+			children = (
+				07F7693619396EF100BF441D /* MXCondition.h */,
+				07F7693719396EF100BF441D /* MXCondition.m */,
+				07F7693819396EF100BF441D /* MXField.h */,
+				07F7693919396EF100BF441D /* MXField.m */,
+				07F7693A19396EF100BF441D /* MXSQL.h */,
+				07F7693B19396EF100BF441D /* MXSQL.m */,
+				07F7693C19396EF100BF441D /* MXTable.h */,
+				07F7693D19396EF100BF441D /* MXTable.m */,
+				07F7693E19396EF100BF441D /* NSObject+MXSQL.h */,
+				07F7693F19396EF100BF441D /* NSObject+MXSQL.m */,
+			);
+			name = MXObject;
+			path = ../MXObject;
+			sourceTree = "<group>";
+		};
 		E9A14F99180CFA25008FEA8C = {
 			isa = PBXGroup;
 			children = (
+				07F7693519396EF100BF441D /* MXObject */,
 				E9A14FCB180CFA6A008FEA8C /* FMDB */,
-				E9A14FD7180CFA6A008FEA8C /* MXObject */,
 				E9A14FAB180CFA25008FEA8C /* MXObjectDemo */,
 				E9A14FA4180CFA25008FEA8C /* Frameworks */,
 				E9A14FA3180CFA25008FEA8C /* Products */,
@@ -163,24 +181,6 @@
 			path = ../FMDB;
 			sourceTree = "<group>";
 		};
-		E9A14FD7180CFA6A008FEA8C /* MXObject */ = {
-			isa = PBXGroup;
-			children = (
-				0750AA8B1887DE9B00FBAE12 /* MXField.h */,
-				0750AA8C1887DE9B00FBAE12 /* MXField.m */,
-				07809767189645C7000C61C6 /* MXTable.h */,
-				07809768189645C7000C61C6 /* MXTable.m */,
-				0750AA941887E1C500FBAE12 /* NSObject+MXSQL.h */,
-				0750AA951887E1C500FBAE12 /* NSObject+MXSQL.m */,
-				0764584A18910FB4000B994F /* MXSQL.h */,
-				0764584B18910FB4000B994F /* MXSQL.m */,
-				E9A14FD8180CFA6A008FEA8C /* MXCondition.h */,
-				E9A14FD9180CFA6A008FEA8C /* MXCondition.m */,
-			);
-			name = MXObject;
-			path = ../MXObject;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -246,20 +246,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F7694319396EF100BF441D /* MXTable.m in Sources */,
+				07F7694419396EF100BF441D /* NSObject+MXSQL.m in Sources */,
+				07F7694119396EF100BF441D /* MXField.m in Sources */,
 				E9A14FB2180CFA25008FEA8C /* main.m in Sources */,
-				0764584C18910FB4000B994F /* MXSQL.m in Sources */,
-				0750AA8D1887DE9B00FBAE12 /* MXField.m in Sources */,
-				07809769189645C7000C61C6 /* MXTable.m in Sources */,
 				E9A14FB6180CFA25008FEA8C /* AppDelegate.m in Sources */,
+				07F7694219396EF100BF441D /* MXSQL.m in Sources */,
 				E9A14FBF180CFA25008FEA8C /* ViewController.m in Sources */,
 				E9A14FCA180CFA61008FEA8C /* Man.m in Sources */,
 				E9A14FDC180CFA6A008FEA8C /* FMDatabase.m in Sources */,
-				0750AA961887E1C500FBAE12 /* NSObject+MXSQL.m in Sources */,
 				E9A14FDD180CFA6A008FEA8C /* FMDatabaseAdditions.m in Sources */,
+				07F7694019396EF100BF441D /* MXCondition.m in Sources */,
 				E9A14FDE180CFA6A008FEA8C /* FMDatabasePool.m in Sources */,
 				E9A14FDF180CFA6A008FEA8C /* FMDatabaseQueue.m in Sources */,
 				E9A14FE1180CFA6A008FEA8C /* FMResultSet.m in Sources */,
-				E9A14FE2180CFA6A008FEA8C /* MXCondition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

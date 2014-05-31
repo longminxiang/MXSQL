@@ -11,8 +11,14 @@
 
 @property (nonatomic, assign) BOOL isOr;
 
+/* between condition */
++ (MXCondition *)whereKey:(NSString *)key between:(id)object and:(id)anobject;
+
 /* equal condition */
 + (MXCondition *)whereKey:(NSString *)key equalTo:(id)object;
+
+/* not equal condition */
++ (MXCondition *)whereKey:(NSString *)key notEqualTo:(id)object;
 
 /* less condition */
 + (MXCondition *)whereKey:(NSString *)key lessThan:(id)object;
@@ -40,5 +46,7 @@
 @interface MXCondition (condition)
 
 + (NSString *)conditionStringWithConditions:(NSArray *)conditions;
+
++ (NSString *)orEqualConditionStringForKey:(NSString *)key values:(NSArray *)values;
 
 @end

@@ -30,7 +30,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         mxsql = [MXSQL new];
-        [mxsql setDatabasePath:MXSQL_DEFAULT_DB_PATH directory:NSCachesDirectory];
+        [mxsql setDefaultDatabasePath];
     });
     return mxsql;
 }
@@ -42,6 +42,11 @@
         self.fieldNameDics = [NSMutableDictionary new];
     }
     return self;
+}
+
+- (void)setDefaultDatabasePath
+{
+    [self setDatabasePath:MXSQL_DEFAULT_DB_PATH directory:NSDocumentDirectory];
 }
 
 - (void)setDatabasePath:(NSString *)path directory:(NSSearchPathDirectory)directory
@@ -213,17 +218,17 @@
     
     NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' SET ",table.name];
     int fieldsCount = table.fields.count;
+    NSMutableArray *argArray = [NSMutableArray new];
     for (int i = 0; i < fieldsCount; i++) {
         MXField *field = [table.fields objectAtIndex:i];
-        if ([field.type isEqualToString:MXTDate]) {
-            NSTimeInterval time = [field.value timeIntervalSince1970];
-            field.value = [NSNumber numberWithDouble:time];
-        }
+        if (!field.value || [field.value isKindOfClass:[NSNull class]]) continue;
         NSString *fString = (i == fieldsCount - 1) ? @"" : @",";
-        sql = [sql stringByAppendingFormat:@"'%@' = '%@'%@",field.name,field.value,fString];
+        sql = [sql stringByAppendingFormat:@"'%@' = ?%@",field.name,fString];
+        [argArray addObject:field.value];
     }
     sql = [sql stringByAppendingFormat:@" WHERE \"%@\" = ?",table.keyField.name];
-    [db executeUpdate:sql,table.keyField.value];
+    [argArray addObject:table.keyField.value];
+    [db executeUpdate:sql withArgumentsInArray:argArray];
     return index;
 }
 
@@ -232,18 +237,17 @@
 {
     NSString *sql = [NSString stringWithFormat:@"INSERT OR IGNORE INTO '%@' (",table.name];
     NSString *vFlag = @" VALUES (";
+    NSMutableArray *argArray = [NSMutableArray new];
     for (int i = 0; i < table.fields.count; i++) {
         MXField *field = [table.fields objectAtIndex:i];
-        if ([field.type isEqualToString:MXTDate]) {
-            NSTimeInterval time = [field.value timeIntervalSince1970];
-            field.value = [NSNumber numberWithDouble:time];
-        }
+        if (!field.value || [field.value isKindOfClass:[NSNull class]]) continue;
         NSString *fString = (i == table.fields.count - 1) ? @")" : @",";
         sql = [sql stringByAppendingFormat:@"'%@'%@",field.name,fString];
-        vFlag = [vFlag stringByAppendingFormat:@"'%@'%@",field.value,fString];
+        vFlag = [vFlag stringByAppendingFormat:@"?%@",fString];
+        [argArray addObject:field.value];
     }
     sql = [sql stringByAppendingString:vFlag];
-    [db executeUpdate:sql];
+    [db executeUpdate:sql withArgumentsInArray:argArray];
     return [db lastInsertRowId];
 }
 
@@ -304,7 +308,7 @@
     __block int count = 0;
     conditionString = conditionString ? conditionString : @"";
     [self.countQueue inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"SELECT COUNT(*) FROM %@%@",table,conditionString];
+        NSString *sql = [NSString stringWithFormat:@"SELECT COUNT(*) FROM %@%@",table,conditionString ? conditionString : @""];
         [db setLogsErrors:NO];
         FMResultSet *rs = [db executeQuery:sql];
         [db setLogsErrors:YES];
@@ -323,9 +327,8 @@
 {
     __block BOOL success = NO;
     [self.deleteQueue inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@%@",table,conditionString];
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@%@",table,conditionString ? conditionString : @""];
         success = [db executeUpdate:sql];
-        [db close];
     }];
     return success;
 }

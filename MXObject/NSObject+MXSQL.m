@@ -26,15 +26,11 @@ static const char *iindexKey = "iindex";
     objc_setAssociatedObject(self, iindexKey, [NSNumber numberWithLongLong:iindex], OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void)setvalueWithFields:(NSArray *)fields
+- (void)setValueWithFields:(NSArray *)fields
 {
     for (MXField *af in fields) {
         if ([af.value isKindOfClass:[NSNull class]]) continue;
         @try {
-            NSString *type = [[self class] typeOfField:af.name];
-            if ([type isEqualToString:MXTDate]) {
-                af.value = [NSDate dateWithTimeIntervalSince1970:[af.value doubleValue]];
-            }
             [self setValue:af.value forKey:af.name];
         }
         @catch (NSException *exception) {
@@ -42,38 +38,11 @@ static const char *iindexKey = "iindex";
     }
 }
 
-#pragma mark === fields ===
-
-+ (NSString *)typeOfField:(NSString *)fieldName
-{
-    NSString *type = [MXField typeOfField:fieldName class:self];
-    return type;
-}
-
-#pragma mark === ignore fields ===
-
-+ (NSArray *)ignoreFields
-{
-    return nil;
-}
-
-#pragma mark === key field ===
-
-+ (NSString *)keyField
-{
-    return nil;
-}
-
 #pragma mark === MXTable ===
 
-+ (MXTable *)table
+- (MXTable *)tableWithIIndex
 {
-    return [MXTable tableForClass:self];
-}
-
-- (MXTable *)table
-{
-    MXTable *table = [MXTable tableForObject:self];
+    MXTable *table = [self mxTable];
     if (!table.keyField && self.iindex) {
         MXField *field = [MXField new];
         field.name = MXSQL_INDEX;
@@ -98,15 +67,23 @@ static const char *iindexKey = "iindex";
 
 - (int64_t)saveWithoutFields:(NSArray *)fields
 {
-    MXTable *table = [self table];
-    for (NSString *fieldName in fields) {
-        for (MXField *field in table.fields) {
-            if ([fieldName isEqualToString:field.name]) {
-                [table.fields removeObject:field];
-                break;
+    MXTable *table = [self tableWithIIndex];
+    
+    //如果有要忽略的field,克隆一个table实例存储
+    if (fields.count) {
+        table = [table clone];
+        NSMutableArray *array = [NSMutableArray arrayWithArray:table.fields];
+        for (NSString *fieldName in fields) {
+            for (MXField *field in table.fields) {
+                if ([fieldName isEqualToString:field.name]) {
+                    [array removeObject:field];
+                    break;
+                }
             }
         }
+        table.fields = array;
     }
+    
     int64_t index = [[MXSQL sharedMXSQL] save:table];
     self.iindex = index;
     return index;
@@ -138,25 +115,20 @@ static const char *iindexKey = "iindex";
 {
     if (self.iindex <= 0) return NO;
     return [self freshWithField:MXSQL_INDEX];
-    
-    return YES;
 }
 
 - (BOOL)freshWithField:(NSString *)fieldName
 {
     id value;
-    @try {
-        value = [self valueForKey:fieldName];
-    }
-    @catch (NSException *exception) {
-    }
+    @try {value = [self valueForKey:fieldName];}
+    @catch (NSException *exception) {}
     if (!value) return NO;
     
     NSString *string = [MXCondition conditionStringWithConditions:@[[MXCondition whereKey:fieldName equalTo:value]]];
-    NSArray *array = [[MXSQL sharedMXSQL] fresh:[self table] condition:string];
+    NSArray *array = [[MXSQL sharedMXSQL] fresh:[self tableWithIIndex] condition:string];
     if (!array.count) return NO;
     NSArray *afields = array[0];
-    [self setvalueWithFields:afields];
+    [self setValueWithFields:afields];
     
     return YES;
 }
@@ -232,7 +204,7 @@ NSString *conditionString = [MXCondition conditionStringWithConditions:condition
 
 + (NSArray *)queryField:(NSString *)fieldName condition:(NSString *)condition
 {
-    NSArray *array = [[MXSQL sharedMXSQL] query:[self table] field:fieldName condition:condition];
+    NSArray *array = [[MXSQL sharedMXSQL] query:[self mxTable] field:fieldName condition:condition];
     NSMutableArray *objects = [NSMutableArray new];
     for (int i = 0; i < array.count; i++) {
         NSArray *afields = array[i];
@@ -243,10 +215,11 @@ NSString *conditionString = [MXCondition conditionStringWithConditions:condition
             }
         }
         else {
-            [object setvalueWithFields:afields];
+            [object setValueWithFields:afields];
         }
         if (object) [objects addObject:object];
     }
+    if (!objects.count) objects = nil;
     return objects;
 }
 
@@ -272,7 +245,7 @@ NSString *conditionString = [MXCondition conditionStringWithConditions:condition
 
 - (BOOL)delete
 {
-    MXField *keyField = [self table].keyField;
+    MXField *keyField = [self mxTable].keyField;
     if (!keyField)
         return NO;
     else
@@ -289,5 +262,11 @@ NSString *conditionString = [MXCondition conditionStringWithConditions:condition
 {
     return [[MXSQL sharedMXSQL] delete:[self description] condition:conditionString];
 }
+
++ (BOOL)deleteAll
+{
+    return [[MXSQL sharedMXSQL] delete:[self description] condition:nil];
+}
+
 
 @end

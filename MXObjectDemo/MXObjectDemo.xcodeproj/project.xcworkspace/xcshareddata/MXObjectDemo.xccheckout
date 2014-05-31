@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A3411CEB-792F-4007-AB57-1457E6AC75F0</string>
+	<string>9BF35884-D7F8-41E4-B48C-8D366D9E476E</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MXObjectDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>BE7E0272-48C8-422E-8841-0F26724CD347</key>
+		<key>F50CC05C-60A5-460F-B36E-9F25380E2A94</key>
 		<string>https://github.com/longminxiang/MXSQL.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MXObjectDemo/MXObjectDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>BE7E0272-48C8-422E-8841-0F26724CD347</key>
+		<key>F50CC05C-60A5-460F-B36E-9F25380E2A94</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>BE7E0272-48C8-422E-8841-0F26724CD347</string>
+	<string>F50CC05C-60A5-460F-B36E-9F25380E2A94</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>BE7E0272-48C8-422E-8841-0F26724CD347</string>
+			<string>F50CC05C-60A5-460F-B36E-9F25380E2A94</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MXSQL</string>
 		</dict>

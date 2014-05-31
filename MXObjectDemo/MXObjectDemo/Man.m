@@ -6,7 +6,6 @@
 //
 
 #import "Man.h"
-#import "NSObject+MXSQL.h"
 
 @implementation Man
 
@@ -21,6 +20,11 @@
 + (NSString *)keyField
 {
     return @"value";
+}
+
++ (NSArray *)includeFields
+{
+    return @[@"house"];
 }
 
 @end

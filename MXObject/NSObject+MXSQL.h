@@ -13,9 +13,6 @@
 
 @property (nonatomic, assign) int64_t iindex;
 
-+ (NSString *)keyField;
-+ (NSArray *)ignoreFields;
-
 - (int64_t)save;
 - (int64_t)saveWithoutFields:(NSArray *)fields;
 
@@ -41,6 +38,7 @@
 + (int)countWithConditionString:(NSString *)conditionString;
 
 - (BOOL)delete;
++ (BOOL)deleteAll;
 + (BOOL)deleteWithCondition:(MXCondition *)condition, ...NS_REQUIRES_NIL_TERMINATION;
 + (BOOL)deleteWithConditionString:(NSString *)conditionString;
 

@@ -15,6 +15,9 @@
 #define MXTDouble   @"double"
 #define MXTBOOL     @"boolean"
 #define MXTLong     @"integer"
+#define MXTData     @"blob"
+
+#pragma mark === MXField ===
 
 @interface MXField : NSObject
 
@@ -24,10 +27,28 @@
 
 @property (nonatomic, strong) id value;
 
-+ (NSMutableArray *)fieldsForObject:(id)object ignoreFields:(NSArray *)ignoreFields;
+@end
 
-+ (NSMutableArray *)fieldsNameForClass:(Class)class ignoreFields:(NSArray *)ignoreFields;
+#pragma mark === MXFieldCache ===
 
-+ (NSString *)typeOfField:(NSString *)fieldName class:(Class)class;
+@interface MXFieldCache : NSObject
+
++ (void)setFieldsCache:(NSArray *)array forClass:(Class)class;
+
++ (NSArray *)fieldsCacheForClass:(Class)class;
+
+@end
+
+#pragma mark === NSObject Category for MXField ===
+
+@interface NSObject (MXField)
+
++ (NSArray *)mxFields;
+
+- (NSArray *)mxFields;
+
++ (MXField *)mxFieldWithName:(NSString *)fieldName;
+
+- (MXField *)mxFieldWithName:(NSString *)fieldName;
 
 @end

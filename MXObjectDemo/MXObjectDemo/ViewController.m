@@ -7,7 +7,6 @@
 
 #import "ViewController.h"
 #import "Man.h"
-#import "NSObject+MXSQL.h"
 
 @interface ViewController ()
 
@@ -29,44 +28,54 @@
 
 - (void)buttonTouched:(id)sender
 {
-    Houses *house = [Houses new];
-    house.iindex = 101;
-    [house freshWithIndex];
+    Man *diaosi = [Man new];
+    diaosi.name = @"a san";
+    diaosi.age = 30;
+    diaosi.gfs = NO;
+    diaosi.brithday = [NSDate date];
+    [diaosi save];
+
+    Man *ds = [Man new];
+    ds.iindex = diaosi.iindex;
+    [ds freshWithIndex];
     
-    house.value = 2000;
-    [house freshWithKeyField];
+    NSLog(@"%@ diaosi %lld born",ds.brithday,ds.iindex);
+    ds.age = 31;
+    ds.gfs = YES;
+    [ds save];
+
+
+    Man *gaofusuai = [Man new];
+    gaofusuai.name = @"wlh";
+    gaofusuai.money = 1000000000;
+    gaofusuai.age = 28;
+    gaofusuai.gfs = YES;
+    [gaofusuai save];
+    NSLog(@"gaofusuai %lld born",gaofusuai.iindex);
     
-    NSLog(@"%@",house);
-//    NSMutableArray *hhs = [NSMutableArray new];
-//    for (int i = 100; i < 2020; i++) {
-//        Houses *hh = [Houses new];
-//        hh.value = i;
-//        hh.value1 = i;
-//        hh.name = @"3fd55555fsddd";
-//        hh.date = [NSDate date];
-//        
-//        House *house = [House new];
-//        house.ownerIndex = i;
-//        house.name = [NSString stringWithFormat:@"house %d",i];
-//        house.value = i * 3 + 100;
-//        hh.house = house;
-//        
-//        Man *man = [Man new];
-//        man.gfs = YES;
-//        man.age = i;
-//        man.name = @"qqq";
-//        man.money = 500 + i;
-//        hh.man = man;
-//        
-//        [hhs addObject:hh];
-//    }
-//    [Houses save:hhs withoutFields:nil completion:^{
-//        [Houses query:^(NSArray *objects) {
-//            for (Houses *ho in objects) {
-//                NSLog(@"%@,%d,%lld",ho.name,ho.value1,ho.iindex);
-//            }
-//        } field:nil conditions:nil];
-//    }];
+    gaofusuai.houses = [NSMutableArray new];
+    for (int i = 0; i < 1000; i++) {
+        House *house = [House new];
+        house.ownerIndex = gaofusuai.iindex;
+        house.name = [NSString stringWithFormat:@"house %d",i];
+        house.value = 5000000;
+        [gaofusuai.houses addObject:house];
+    }
+    [Houses save:gaofusuai.houses completion:^{
+        [House query:^(NSArray *objects) {
+            for (int i = 0; i < objects.count; i++) {
+                House *hs = (House *)objects[i];
+                NSLog(@"gaofusuai %lld bought house %lld",gaofusuai.iindex,hs.iindex);
+            }
+        } conditions:[MXCondition whereKey:@"ownerIndex" equalTo:[NSNumber numberWithInt:gaofusuai.iindex]], nil];
+    }];
+
+    
+    [Man queryAll:^(NSArray *objects) {
+        for (Man *man in objects) {
+            NSLog(@"man %lld %@",man.iindex,man.gfs ? @"is gaofusuai" : @"is diaosi");
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning

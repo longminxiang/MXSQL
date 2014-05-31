@@ -8,20 +8,38 @@
 #import <Foundation/Foundation.h>
 #import "MXField.h"
 
+#pragma mark === MXTable ===
+
 @interface MXTable : NSObject
 
 @property (nonatomic, copy) NSString *name;
 
 @property (nonatomic, strong) MXField *keyField;
 
-@property (nonatomic, strong) NSMutableArray *fields;
+@property (nonatomic, strong) NSArray *fields;
 
-@property (nonatomic, strong) NSArray *ignoreFields;
+- (instancetype)clone;
 
-+ (instancetype)tableForClass:(Class)class;
+@end
 
-+ (instancetype)tableForObject:(id)object;
+#pragma mark === MXTableCaache ===
 
-- (MXField *)fieldForKey:(NSString *)key;
+@interface MXTableCache : NSObject
+
++ (void)setTableCache:(MXTable *)table forClass:(Class)class;
+
++ (MXTable *)tableCacheForClass:(Class)class;
+
+@end
+
+#pragma mark === NSObject Category for MXTable ===
+
+@interface NSObject (MXTable)
+
++ (NSString *)keyField;
+
++ (MXTable *)mxTable;
+
+- (MXTable *)mxTable;
 
 @end
