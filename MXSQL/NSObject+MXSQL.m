@@ -62,6 +62,10 @@ static const char *iindexKey = "iindex";
 
 + (void)save:(NSArray *)objects completion:(void (^)())completion
 {
+    if (!objects.count) {
+        if (completion) completion();
+        return;
+    }
     [self save:objects withoutFields:nil completion:completion];
 }
 

@@ -14,15 +14,17 @@
 @property (nonatomic, copy) NSString *dbPath;
 @property (nonatomic, assign) NSSearchPathDirectory dbDirectory;
 
-@property (nonatomic, strong) NSMutableArray *tableNames;
-@property (nonatomic, strong) NSMutableDictionary *fieldNameDics;
+@property (nonatomic, strong, readonly) NSMutableDictionary *dbDictionary;   //数据库{表名:字段名}
 
-@property (nonatomic, strong) FMDatabaseQueue *saveQueue, *queryQueue, *freshQueue;
-@property (nonatomic, strong) FMDatabaseQueue *countQueue, *deleteQueue;
+@property (nonatomic, strong, readonly) FMDatabaseQueue *saveQueue, *queryQueue, *freshQueue;
+@property (nonatomic, strong, readonly) FMDatabaseQueue *countQueue, *deleteQueue;
 
 @end
 
 @implementation MXSQL
+@synthesize saveQueue = _saveQueue, queryQueue = _queryQueue, freshQueue = _freshQueue;
+@synthesize countQueue = _countQueue, deleteQueue = _deleteQueue;
+@synthesize dbDictionary = _dbDictionary;
 
 + (instancetype)sharedMXSQL
 {
@@ -35,14 +37,28 @@
     return mxsql;
 }
 
-- (id)init
+- (NSMutableDictionary *)dbDictionary
 {
-    if (self = [super init]) {
-        self.tableNames = [NSMutableArray new];
-        self.fieldNameDics = [NSMutableDictionary new];
+    if (!_dbDictionary) {
+        _dbDictionary = [NSMutableDictionary new];
     }
-    return self;
+    return _dbDictionary;
 }
+
+#define FMDBQueue(queue) \
+- (FMDatabaseQueue *)queue \
+{ \
+    if (!_##queue) { \
+        _##queue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath]; \
+    } \
+    return _##queue; \
+}
+
+FMDBQueue(saveQueue)
+FMDBQueue(queryQueue)
+FMDBQueue(freshQueue)
+FMDBQueue(countQueue)
+FMDBQueue(deleteQueue)
 
 - (void)setDefaultDatabasePath
 {
@@ -67,24 +83,23 @@
     }
     
     _currentDBPath = [path copy];
-    self.saveQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
-    self.queryQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
-    self.countQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
-    self.deleteQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
-    self.freshQueue = [FMDatabaseQueue databaseQueueWithPath:self.currentDBPath];
-    
-    [self.tableNames removeAllObjects];
-    [self.fieldNameDics removeAllObjects];
+    [self getDBDictionary];
+}
+
+//获取当前数据库表名和字段名
+- (void)getDBDictionary
+{
+    [self.dbDictionary removeAllObjects];
     [self.saveQueue inDatabase:^(FMDatabase *db) {
         NSArray *tables = [self tableNamesInDB:db];
-        [self.tableNames addObjectsFromArray:tables];
         for (NSString *tbName in tables) {
             NSArray *fields = [self fieldNamesFromTable:tbName inDB:db];
-            [self.fieldNameDics setObject:fields forKey:tbName];
+            [self.dbDictionary setObject:fields forKey:tbName];
         }
     }];
 }
 
+//获取当前数据库表名
 - (NSArray *)tableNamesInDB:(FMDatabase *)db
 {
     NSMutableArray *array = [NSMutableArray new];
@@ -98,6 +113,7 @@
     return array;
 }
 
+//获取表字段名
 - (NSArray *)fieldNamesFromTable:(NSString *)table inDB:(FMDatabase *)db
 {
     NSMutableArray *array = [NSMutableArray new];
@@ -117,9 +133,11 @@
 {
     if ([db tableExists:table.name]) return;
     NSMutableArray *nfields = [NSMutableArray new];
+    
     MXField *field = [MXField new];
     field.name = MXSQL_INDEX;
     field.type = MXTInt;
+    
     [nfields addObject:field];
     [nfields addObjectsFromArray:table.fields];
     NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS '%@' (",table.name];
@@ -138,14 +156,15 @@
 
 - (void)updateTable:(MXTable *)table inDB:(FMDatabase *)db
 {
-    NSArray *ofieldNames = [self.fieldNameDics objectForKey:table.name];
+    NSArray *ofieldNames = [self.dbDictionary objectForKey:table.name];
+    //判断dbdictionary里是否有此表
     if (!ofieldNames.count) {
-        [self.tableNames addObject:table.name];
         NSArray *fields = [self fieldNamesFromTable:table.name inDB:db];
-        [self.fieldNameDics setObject:fields forKey:table.name];
+        [self.dbDictionary setObject:fields forKey:table.name];
         return;
     }
     
+    //判断是否有新增的列
     NSMutableArray *noneFields = [NSMutableArray new];
     for (MXField *field in table.fields) {
         BOOL has = NO;
@@ -156,15 +175,16 @@
         }
         if (!has) [noneFields addObject:field];
     }
-    if (noneFields.count) {
-        for (int i = 0; i < noneFields.count; i++) {
-            MXField *field = [noneFields objectAtIndex:i];
-            NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN '%@' %@ ",table.name,field.name,field.type];
-            [db executeUpdate:sql];
-        }
-        NSArray *fields = [self fieldNamesFromTable:table.name inDB:db];
-        [self.fieldNameDics setObject:fields forKey:table.name];
+    if (!noneFields.count) return;
+
+    //
+    for (int i = 0; i < noneFields.count; i++) {
+        MXField *field = [noneFields objectAtIndex:i];
+        NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN '%@' %@ ",table.name,field.name,field.type];
+        [db executeUpdate:sql];
     }
+    NSArray *fields = [self fieldNamesFromTable:table.name inDB:db];
+    [self.dbDictionary setObject:fields forKey:table.name];
 }
 
 #pragma mark === save or update ===
@@ -217,9 +237,9 @@
     if (index == -1) return -1;
     
     NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' SET ",table.name];
-    int fieldsCount = table.fields.count;
+    NSInteger fieldsCount = table.fields.count;
     NSMutableArray *argArray = [NSMutableArray new];
-    for (int i = 0; i < fieldsCount; i++) {
+    for (NSInteger i = 0; i < fieldsCount; i++) {
         MXField *field = [table.fields objectAtIndex:i];
         if (!field.value || [field.value isKindOfClass:[NSNull class]]) continue;
         NSString *fString = (i == fieldsCount - 1) ? @"" : @",";
