@@ -12,7 +12,6 @@
 @interface MXSQL ()
 
 @property (nonatomic, copy) NSString *dbPath;
-@property (nonatomic, assign) NSSearchPathDirectory dbDirectory;
 
 @property (nonatomic, strong, readonly) NSMutableDictionary *dbDictionary;   //数据库{表名:字段名}
 
@@ -67,10 +66,6 @@ FMDBQueue(deleteQueue)
 
 - (void)setDatabasePath:(NSString *)path directory:(NSSearchPathDirectory)directory
 {
-    if ([path isEqualToString:self.dbPath] && directory == self.dbDirectory) return;
-    self.dbPath = path;
-    self.dbDirectory = directory;
-    
     NSString *dir = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES)[0];
     NSArray *pathArr = [path componentsSeparatedByString:@"/"];
     if (pathArr.count > 1) {
@@ -81,6 +76,13 @@ FMDBQueue(deleteQueue)
     else {
         path = [dir stringByAppendingPathComponent:path];
     }
+    [self setDatabasePath:path];
+}
+
+- (void)setDatabasePath:(NSString *)path
+{
+    if ([path isEqualToString:self.dbPath]) return;
+    self.dbPath = path;
     
     _currentDBPath = [path copy];
     [self getDBDictionary];

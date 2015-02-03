@@ -21,6 +21,8 @@
 
 - (void)setDefaultDatabasePath;
 
+- (void)setDatabasePath:(NSString *)path;
+
 - (void)setDatabasePath:(NSString *)path directory:(NSSearchPathDirectory)directory;
 
 - (int64_t)save:(MXTable *)table;
