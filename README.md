@@ -1,4 +1,4 @@
-#MXSQL
+#MXSqlite
 
 save your object to sqlite easily.
 
@@ -30,4 +30,4 @@ and than you can new one and save it
 
 #License
 
-MXSQL is available under the MIT license. See the LICENSE file for more info. 
+MXSqlite is available under the MIT license. See the LICENSE file for more info. 
