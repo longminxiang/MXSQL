@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Eric Lung" => "longminxiang@163@gmail.com" }
   s.source           = { :git => "https://github.com/longminxiang/MXSqlite.git", :tag => s.version.to_s }
+  s.dependency 'FMDB', '~> 2.5'
   s.platform     = :ios, '6.0'
   s.requires_arc = true
 
