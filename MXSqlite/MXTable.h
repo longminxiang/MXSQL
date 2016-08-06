@@ -14,15 +14,10 @@
 
 @property (nonatomic, copy) NSString *name;
 
-@property (nonatomic, strong) MXField *keyField;
-
-@property (nonatomic, readonly) MXField *idxField;
+@property (nonatomic, strong) MXField *pkField;
 
 @property (nonatomic, strong) NSArray *fields;
 
 - (instancetype)clone;
-- (instancetype)cloneWithExcludeFields:(NSArray *)fields;
-
-- (BOOL)isKeyFieldEmpty;
 
 @end

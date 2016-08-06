@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07D31C521D55D81C00CD3141 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07D31C511D55D81C00CD3141 /* Images.xcassets */; };
 		07E8A6641B4F638800C65788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6631B4F638800C65788 /* main.m */; };
 		07E8A6671B4F638800C65788 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6661B4F638800C65788 /* AppDelegate.m */; };
 		07E8A66A1B4F638800C65788 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6691B4F638800C65788 /* ViewController.m */; };
-		07E8A66F1B4F638800C65788 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A66E1B4F638800C65788 /* Images.xcassets */; };
 		07E8A6721B4F638800C65788 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A6701B4F638800C65788 /* LaunchScreen.xib */; };
 		07E8A6891B4F646900C65788 /* Man.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6881B4F646900C65788 /* Man.m */; };
-		18D005EC7093806AF6682008 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C388C2F42FA49E28848C6AE /* libPods.a */; };
+		CDEE395F408C01201B2DE947 /* libPods-MXSqliteDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27AF38F5E89E5E778D0C5DD0 /* libPods-MXSqliteDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07D31C511D55D81C00CD3141 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		07E8A65E1B4F638800C65788 /* MXSqliteDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MXSqliteDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E8A6621B4F638800C65788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07E8A6631B4F638800C65788 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -24,13 +25,12 @@
 		07E8A6661B4F638800C65788 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		07E8A6681B4F638800C65788 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		07E8A6691B4F638800C65788 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		07E8A66E1B4F638800C65788 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		07E8A6711B4F638800C65788 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		07E8A6871B4F646900C65788 /* Man.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Man.h; sourceTree = "<group>"; };
 		07E8A6881B4F646900C65788 /* Man.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Man.m; sourceTree = "<group>"; };
-		13CD5343CCFB1B0BDE6871A9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		2930FD28527D44FF7A4E1417 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		8C388C2F42FA49E28848C6AE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		27AF38F5E89E5E778D0C5DD0 /* libPods-MXSqliteDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MXSqliteDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B58B679C3C0C8FF9962EB23 /* Pods-MXSqliteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSqliteDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo.release.xcconfig"; sourceTree = "<group>"; };
+		F2FC0BAC978FB12DED3F516A /* Pods-MXSqliteDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSqliteDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18D005EC7093806AF6682008 /* libPods.a in Frameworks */,
+				CDEE395F408C01201B2DE947 /* libPods-MXSqliteDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,8 +50,8 @@
 			children = (
 				07E8A6601B4F638800C65788 /* MXSqliteDemo */,
 				07E8A65F1B4F638800C65788 /* Products */,
-				3791817C0BEC62C4817DB259 /* Pods */,
-				65B48750942F9F150DBD98B6 /* Frameworks */,
+				53CD2D903C6F5FEB049C507E /* Pods */,
+				89F715C0CC38BD9260ED9031 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,8 +72,8 @@
 				07E8A6881B4F646900C65788 /* Man.m */,
 				07E8A6681B4F638800C65788 /* ViewController.h */,
 				07E8A6691B4F638800C65788 /* ViewController.m */,
-				07E8A66E1B4F638800C65788 /* Images.xcassets */,
 				07E8A6701B4F638800C65788 /* LaunchScreen.xib */,
+				07D31C511D55D81C00CD3141 /* Images.xcassets */,
 				07E8A6611B4F638800C65788 /* Supporting Files */,
 			);
 			path = MXSqliteDemo;
@@ -88,19 +88,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3791817C0BEC62C4817DB259 /* Pods */ = {
+		53CD2D903C6F5FEB049C507E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				13CD5343CCFB1B0BDE6871A9 /* Pods.debug.xcconfig */,
-				2930FD28527D44FF7A4E1417 /* Pods.release.xcconfig */,
+				F2FC0BAC978FB12DED3F516A /* Pods-MXSqliteDemo.debug.xcconfig */,
+				3B58B679C3C0C8FF9962EB23 /* Pods-MXSqliteDemo.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		65B48750942F9F150DBD98B6 /* Frameworks */ = {
+		89F715C0CC38BD9260ED9031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8C388C2F42FA49E28848C6AE /* libPods.a */,
+				27AF38F5E89E5E778D0C5DD0 /* libPods-MXSqliteDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,11 +112,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07E8A6811B4F638800C65788 /* Build configuration list for PBXNativeTarget "MXSqliteDemo" */;
 			buildPhases = (
-				7AF03E22787251503AE628F3 /* Check Pods Manifest.lock */,
+				2F3C05B1DFDB32C8E81F4DD0 /* [CP] Check Pods Manifest.lock */,
 				07E8A65A1B4F638800C65788 /* Sources */,
 				07E8A65B1B4F638800C65788 /* Frameworks */,
 				07E8A65C1B4F638800C65788 /* Resources */,
-				1753C402FA89AF59034AD301 /* Copy Pods Resources */,
+				B126AE9550C8B855E9CA87C1 /* [CP] Embed Pods Frameworks */,
+				0371755A9E6755334CF945A0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,7 +134,7 @@
 		07E8A6561B4F638800C65788 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = eric;
 				TargetAttributes = {
 					07E8A65D1B4F638800C65788 = {
@@ -165,41 +166,56 @@
 			buildActionMask = 2147483647;
 			files = (
 				07E8A6721B4F638800C65788 /* LaunchScreen.xib in Resources */,
-				07E8A66F1B4F638800C65788 /* Images.xcassets in Resources */,
+				07D31C521D55D81C00CD3141 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1753C402FA89AF59034AD301 /* Copy Pods Resources */ = {
+		0371755A9E6755334CF945A0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7AF03E22787251503AE628F3 /* Check Pods Manifest.lock */ = {
+		2F3C05B1DFDB32C8E81F4DD0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B126AE9550C8B855E9CA87C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -251,6 +267,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -312,24 +329,26 @@
 		};
 		07E8A6821B4F638800C65788 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13CD5343CCFB1B0BDE6871A9 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F2FC0BAC978FB12DED3F516A /* Pods-MXSqliteDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = MXSqliteDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		07E8A6831B4F638800C65788 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2930FD28527D44FF7A4E1417 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 3B58B679C3C0C8FF9962EB23 /* Pods-MXSqliteDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = MXSqliteDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

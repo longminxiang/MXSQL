@@ -8,6 +8,7 @@
 
 #import "MXSqliteObject.h"
 #import "MXSqliteObjCache.h"
+#import <objc/runtime.h>
 
 @implementation MXSqliteObject
 
@@ -397,6 +398,41 @@ NSString *conditionString = [MXCondition conditionStringWithConditions:condition
 + (BOOL)deleteAll
 {
     return [[MXSqlite objInstance] delete:[self clsName] condition:nil];
+}
+
+@end
+
+@implementation MXSqliteQuery
+
+- (MXSqliteConditionBlock)c
+{
+    return ^MXSqliteQuery *(NSString *key, MXSqliteConditionType type, id val) {
+        return self;
+    };
+}
+
+- (MXSqliteConditionOrderBlock)o
+{
+    return ^MXSqliteQuery *(MXSqliteConditionOrder order) {
+        return self;
+    };
+}
+
+@end
+
+@implementation NSObject (SQLMethod)
+
++ (NSArray *)query:(MXSqliteQueryBlock)block
+{
+
+}
+
++ (void)query:(MXSqliteQueryBlock)block completion:(MXSqliteArrayBlock)completion
+{
+    MXSqliteQuery *query = [MXSqliteQuery new];
+    if (block) block(query);
+//    NSArray *array = [[MXSqlite objInstance] query:[self table] include:fnames condition:condition];
+
 }
 
 @end

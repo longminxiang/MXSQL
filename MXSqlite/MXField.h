@@ -28,6 +28,6 @@
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, strong) id value;
 
-- (BOOL)isIdxField;
++ (instancetype)pkField;
 
 @end

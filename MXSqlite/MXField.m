@@ -11,15 +11,18 @@
 
 @implementation MXField
 
++ (instancetype)pkField
+{
+    MXField *field = [MXField new];
+    field.name = IDX_FIELD_NAME;
+    field.type = MXTLong;
+    return field;
+}
+
 - (NSString *)description
 {
     NSString *des = [NSString stringWithFormat:@"%@: %@: %@", self.name, self.type, self.value];
     return des;
-}
-
-- (BOOL)isIdxField
-{
-    return [self.name isEqualToString:IDX_FIELD_NAME];
 }
 
 @end

@@ -65,3 +65,39 @@
 + (BOOL)deleteAll;
 
 @end
+
+typedef NS_ENUM(NSInteger, MXSqliteConditionType)
+{
+    equal = 0,
+    less = 1,
+    greater = 2,
+};
+
+typedef NS_ENUM(NSInteger, MXSqliteConditionOrder)
+{
+    des = 0,
+    asc = 1,
+};
+
+
+@interface MXSqliteQuery : NSObject
+
+typedef MXSqliteQuery* (^MXSqliteConditionBlock)(NSString *key, MXSqliteConditionType type, id val);
+typedef MXSqliteQuery* (^MXSqliteConditionOrderBlock)(MXSqliteConditionOrder order);
+
+@property (nonatomic, readonly) MXSqliteConditionBlock c;
+
+@property (nonatomic, readonly) MXSqliteConditionOrderBlock o;
+
+@end
+
+@interface NSObject (SQLMethod)
+
+typedef void (^MXSqliteQueryBlock)(MXSqliteQuery *query);
+typedef void (^MXSqliteArrayBlock)(NSArray *objs);
+
++ (NSArray *)query:(MXSqliteQueryBlock)block;
+
++ (void)query:(MXSqliteQueryBlock)block completion:(MXSqliteArrayBlock)completion;
+
+@end

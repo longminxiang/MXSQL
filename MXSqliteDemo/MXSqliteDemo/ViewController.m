@@ -61,6 +61,22 @@
 //    m.name = @"san10";
 //    [m freshWithKeyField];
 //    NSLog(@"%@", [m fields]);
+    
+    [Man query:^(MXSqliteQuery *query) {
+        
+    }];
+    
+    [Man query:^(MXSqliteQuery *query) {
+        query.c(@"xxx", greater, @(6));
+        query.c(@"yyy", equal, @"eee");
+        query.o(des);
+    } completion:^(NSArray *objs) {
+        
+    }];
+    
+    [Man query:nil completion:^(NSArray *objs) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
