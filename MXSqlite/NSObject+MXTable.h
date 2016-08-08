@@ -11,23 +11,7 @@
 #import "MXSqlite.h"
 #import "MXSqliteQuery.h"
 
-@protocol MXSqliteProtocal <NSObject>
 
-@optional
-
-+ (NSString *)pkField;
-
-@end
-
-@interface NSObject (MXTable)
-
-@property (nonatomic, assign) long long mxsql_id;
-
-+ (MXTable *)mxsql_table;
-
-- (MXRecord *)mxsql_record;
-
-@end
 
 @interface NSObject (MXSqlite)
 

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		024AA4B7BB46346FB363AA3CEF54B363 /* NSObject+MXTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 13064500C523C9E17EDE48075B9558F6 /* NSObject+MXTable.m */; };
+		074EA8951D58885A00385C24 /* MXSqliteRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 074EA8931D58885A00385C24 /* MXSqliteRecord.h */; };
+		074EA8961D58885A00385C24 /* MXSqliteRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 074EA8941D58885A00385C24 /* MXSqliteRecord.m */; };
+		074EA8991D588DA900385C24 /* NSObject+MXSqliteRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 074EA8971D588DA900385C24 /* NSObject+MXSqliteRecord.h */; };
+		074EA89A1D588DA900385C24 /* NSObject+MXSqliteRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 074EA8981D588DA900385C24 /* NSObject+MXSqliteRecord.m */; };
 		0EF8E9AA652DBE2745A7D5C8CD2E3BDE /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 400AFB42920EB39709666D3F1A73D6C2 /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		0F8A8E0D6FAEBF758E0B4D620335F094 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AF3AEDDA16DD8E28B59FF0788FDDC03 /* FMDatabasePool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1168B2FABA77ED505FC57A9423F4C258 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
@@ -65,6 +69,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		074EA8931D58885A00385C24 /* MXSqliteRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSqliteRecord.h; sourceTree = "<group>"; };
+		074EA8941D58885A00385C24 /* MXSqliteRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSqliteRecord.m; sourceTree = "<group>"; };
+		074EA8971D588DA900385C24 /* NSObject+MXSqliteRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MXSqliteRecord.h"; sourceTree = "<group>"; };
+		074EA8981D588DA900385C24 /* NSObject+MXSqliteRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MXSqliteRecord.m"; sourceTree = "<group>"; };
 		0FF08AA868D14595DC9B698863C1F915 /* Pods-MXSqliteDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MXSqliteDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		13064500C523C9E17EDE48075B9558F6 /* NSObject+MXTable.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MXTable.m"; sourceTree = "<group>"; };
 		15F93878D24EB87D7666B9B35AA6841C /* MXField.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MXField.m; sourceTree = "<group>"; };
@@ -236,8 +244,12 @@
 				5031D40CC34F4AE67B31FC7F97BE4B60 /* MXSqliteQuery.m */,
 				FEA2E5A3259D472611360662987A8438 /* MXTable.h */,
 				67C5641A03CBCB6C11115BD2FDD1BFEC /* MXTable.m */,
+				074EA8971D588DA900385C24 /* NSObject+MXSqliteRecord.h */,
+				074EA8981D588DA900385C24 /* NSObject+MXSqliteRecord.m */,
 				AB8888E702165F076C2A98C2C78EAFD3 /* NSObject+MXTable.h */,
 				13064500C523C9E17EDE48075B9558F6 /* NSObject+MXTable.m */,
+				074EA8931D58885A00385C24 /* MXSqliteRecord.h */,
+				074EA8941D58885A00385C24 /* MXSqliteRecord.m */,
 			);
 			path = MXSqlite;
 			sourceTree = "<group>";
@@ -316,8 +328,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074EA8991D588DA900385C24 /* NSObject+MXSqliteRecord.h in Headers */,
 				D0D5FFE53407F16C9CD3D0ECF43ACE93 /* FMDatabase.h in Headers */,
 				B418C9BDCF8C6BAC2E3942F157BB6D4C /* FMDatabaseAdditions.h in Headers */,
+				074EA8951D58885A00385C24 /* MXSqliteRecord.h in Headers */,
 				0F8A8E0D6FAEBF758E0B4D620335F094 /* FMDatabasePool.h in Headers */,
 				D0C5FF5485EAA2CDA03E9796B407697A /* FMDatabaseQueue.h in Headers */,
 				313531CEDA0294311D87B4F4C3F073F4 /* FMDB.h in Headers */,
@@ -417,7 +431,9 @@
 				CA027706DD6805766F1F4EC548E72440 /* FMDatabase.m in Sources */,
 				A350C5704A1F233DAD830E081E00F8C1 /* FMDatabaseAdditions.m in Sources */,
 				0EF8E9AA652DBE2745A7D5C8CD2E3BDE /* FMDatabasePool.m in Sources */,
+				074EA8961D58885A00385C24 /* MXSqliteRecord.m in Sources */,
 				282081E035E7A843068E8BCC2E07C217 /* FMDatabaseQueue.m in Sources */,
+				074EA89A1D588DA900385C24 /* NSObject+MXSqliteRecord.m in Sources */,
 				3D0F69C4CA35EB6A1F686BA88B19B4F6 /* FMDB-dummy.m in Sources */,
 				DEFA3504695E9DFDE1177DAB22884470 /* FMResultSet.m in Sources */,
 			);
