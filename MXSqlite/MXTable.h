@@ -18,6 +18,16 @@
 
 @property (nonatomic, strong) NSArray *fields;
 
-- (instancetype)clone;
+@end
+
+@interface MXRecord : NSObject
+
+@property (nonatomic, strong) MXTable *table;
+
+@property (nonatomic, strong) MXFieldValue *pkFieldValue;
+
+@property (nonatomic, strong) NSArray *fieldValues;
+
+- (instancetype)initWithTable:(MXTable *)table;
 
 @end

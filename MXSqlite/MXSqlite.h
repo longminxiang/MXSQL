@@ -22,18 +22,15 @@
 - (void)setDbPath:(NSString *)path directory:(NSSearchPathDirectory)directory;
 
 //保存
-- (int64_t)save:(MXTable *)table;
-
-//同步
-- (NSArray *)fresh:(MXTable *)table condition:(NSString *)conditionString;
+- (BOOL)save:(MXRecord *)record;
 
 //查询
-- (NSArray *)query:(MXTable *)table include:(NSArray *)fields condition:(NSString *)conditionString;
+- (NSArray *)query:(MXTable *)table fields:(NSArray *)fields condition:(NSString *)conditionString;
 
 //查询数量
-- (int)count:(NSString *)table condition:(NSString *)conditionString;
+- (int)count:(NSString *)tableName condition:(NSString *)conditionString;
 
 //删除
-- (BOOL)delete:(NSString *)table condition:(NSString *)conditionString;
+- (BOOL)delete:(NSString *)tableName condition:(NSString *)conditionString;
 
 @end

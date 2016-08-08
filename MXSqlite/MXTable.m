@@ -11,18 +11,18 @@
 
 @implementation MXTable
 
-- (instancetype)clone
-{
-    if (!self) return nil;
-    MXTable *table = [MXTable new];
-    table.name = self.name;
-    table.pkField = self.pkField;
-    NSArray *fields;
-    if (self.fields) fields = [NSArray arrayWithArray:self.fields];
-    table.fields = fields;
-    return table;
-}
-
 @end
 
 
+@implementation MXRecord
+
+- (instancetype)initWithTable:(MXTable *)table
+{
+    if (self = [super init]) {
+        self.table = table;
+        self.pkFieldValue = [MXFieldValue instanceWithField:table.pkField];
+    }
+    return self;
+}
+
+@end

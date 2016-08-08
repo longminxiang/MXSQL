@@ -80,16 +80,6 @@ BOOL mxsql_isSqliteProtocal(Class cls)
     return fields;
 }
 
-- (NSArray *)mxsql_fields
-{
-    NSArray *fields = [[self class] mxsql_fields];
-    for (MXField *field in fields) {
-        id value = [self valueForKey:field.name];
-        field.value = value;
-    }
-    return fields;
-}
-
 + (MXField *)mxsql_fieldWithName:(NSString *)fname
 {
     NSArray *fields = [self mxsql_fields];
@@ -101,18 +91,7 @@ BOOL mxsql_isSqliteProtocal(Class cls)
     return nil;
 }
 
-- (MXField *)mxsql_fieldWithName:(NSString *)fname
-{
-    NSArray *fields = [self mxsql_fields];
-    for (MXField *field in fields) {
-        if ([field.name isEqualToString:fname]) {
-            return field;
-        }
-    }
-    return nil;
-}
-
-- (NSString *)typeWithFieldName:(NSString *)name
++ (NSString *)mxsql_typeForField:(NSString *)name
 {
     NSArray *fields = [self mxsql_fields];
     for (MXField *field in fields) {
@@ -123,15 +102,25 @@ BOOL mxsql_isSqliteProtocal(Class cls)
     return nil;
 }
 
-#pragma mark
-#pragma mark === table ===
-
 + (NSString *)mxsql_tableName
 {
     return NSStringFromClass(self);
 }
 
-+ (MXTable *)table
++ (MXField *)getPkField
+{
+    NSString *pk;
+    if ([self instancesRespondToSelector:@selector(pkField)]) {
+        pk = [self forwardingTargetForSelector:@selector(pkField)];
+    }
+    if ([pk isKindOfClass:[NSString class]] && [pk isEqualToString:@""]) {
+        MXField *field = [self mxsql_fieldWithName:pk];
+        if (field) return field;
+    }
+    return [MXField defaultPkField];
+}
+
++ (MXTable *)mxsql_table
 {
     if (!mxsql_isSqliteProtocal(self)) return nil;
 
@@ -140,21 +129,72 @@ BOOL mxsql_isSqliteProtocal(Class cls)
     
     table = [MXTable new];
     table.name = [self mxsql_tableName];
-    
-    if ([self ])
-    table.keyField = [self mxsql_fieldWithName:[self keyField]];
     table.fields = [self mxsql_fields];
+    table.pkField = [self getPkField];
     [self cacheTable:table];
     
     return table;
 }
 
-- (MXTable *)table
+- (MXRecord *)mxsql_record
 {
-    MXTable *table = [[self class] table];
-    table.fields = [self fields];
-    table.keyField = [self fieldWithName:[[self class] keyField]];
-    return table;
+    if (!mxsql_isSqliteProtocal(self)) return nil;
+    
+    MXRecord *record = objc_getAssociatedObject(self, _cmd);
+    if (!record) {
+        record = [MXRecord new];
+        record.table = [[self class] mxsql_table];
+        
+        MXField *pk = [[self class] getPkField];
+        MXFieldValue *pkv = [MXFieldValue instanceWithField:pk];
+        pkv.value = [self valueForKey:pk.name];
+        record.pkFieldValue = pkv;
+        
+        NSMutableArray *fields = [NSMutableArray new];
+        for (MXField *field in [[self class] mxsql_fields]) {
+            if ([field.name isEqualToString:pkv.name]) {
+                [fields addObject:pkv];
+                continue;
+            }
+            MXFieldValue *fv = [MXFieldValue instanceWithField:field];
+            id value = [self valueForKey:field.name];
+            fv.value = fv.value;
+            [fields addObject:fv];
+        }
+        record.fieldValues = fields;
+        
+        objc_setAssociatedObject(self, _cmd, record, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return record;
+}
+
+@end
+
+@implementation NSObject (MXSqlite)
+
+#pragma mark
+#pragma mark === save ===
+
+- (BOOL)save
+{
+    return [[MXSqlite objInstance] save:self.mxsql_record];
+}
+
++ (void)save:(NSArray *)objects completion:(void (^)())completion
+{
+    if (!objects.count) {
+        if (completion) completion();
+        return;
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 0; i < objects.count; i++) {
+            id object = objects[i];
+            [object save];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) completion();
+        });
+    });
 }
 
 @end

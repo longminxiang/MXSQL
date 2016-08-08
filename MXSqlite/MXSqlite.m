@@ -142,7 +142,13 @@
     for (int i = 0; i < fields.count; i++) {
         MXField *field = fields[i];
         NSString *fstr = (i == fields.count - 1) ? @")" : @",";
-        NSString *pstr = [field isIdxField] ? @" PRIMARY KEY AUTOINCREMENT" : @"";
+        NSString *pstr = @"";
+        if ([field.name isEqualToString:table.pkField.name]) {
+            pstr = @" PRIMARY KEY";
+            if ([field.type isEqualToString:MXTInt] || [field.type isEqualToString:MXTLong]) {
+                pstr = [pstr stringByAppendingString:@" AUTOINCREMENT"];
+            }
+        }
         sql = [sql stringByAppendingFormat:@"'%@' %@%@%@", field.name, field.type, pstr,fstr];
         [fieldNames addObject:field.name];
     }
@@ -197,166 +203,144 @@
 #pragma mark === save or update ===
 
 //保存
-- (int64_t)save:(MXTable *)table
+- (BOOL)save:(MXRecord *)record
 {
-    __block int64_t idx = 0;
-    if (!table) return idx;
+    if (!record) return NO;
+    __block success = NO;
     [self.saveQueue inDatabase:^(FMDatabase *db) {
         
-        [self createOrUpdateTable:table db:db];
+        [self createOrUpdateTable:record.table db:db];
         
-        int64_t tidx = [table.idxField.value longLongValue];
-        BOOL excludeIdx = NO;
-        if (![table isKeyFieldEmpty]) {
-            idx = [self update:table withField:table.keyField db:db];
-            excludeIdx = YES;
+        BOOL exist = [self recordDidExists:record db:db];
+        if (exist) {
+            success = [self update:record db:db];
         }
-        else if (tidx > 0) {
-            idx = [self update:table withField:table.idxField db:db];
+        else {
+            success = [self insert:record db:db];
         }
-        //插入
-        if (idx <= 0) idx = [self insert:table excludeIdx:excludeIdx inDB:db];
     }];
-    return idx;
+    return success;
 }
 
 //更新
-- (int64_t)update:(MXTable *)table withField:(MXField *)field db:(FMDatabase *)db
+- (BOOL)update:(MXRecord *)record db:(FMDatabase *)db
 {
-    [db setLogsErrors:NO];
-    int64_t idx = [self table:table didExist:field db:db];
-    [db setLogsErrors:YES];
-    if (idx <= 0) return 0;
+    NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' SET ", record.table.name];
     
-    NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' SET ",table.name];
-    NSInteger fieldsCount = table.fields.count;
     NSMutableArray *argArray = [NSMutableArray new];
-    for (NSInteger i = 0; i < fieldsCount; i++) {
-        MXField *f = table.fields[i];
-        if (!f.value || [f.value isKindOfClass:[NSNull class]]) continue;
-        if ([f.name isEqualToString:IDX_FIELD_NAME]) {
-            f.value = @(idx);
-        }
-        sql = [sql stringByAppendingFormat:@"'%@' = ?,", f.name];
-        [argArray addObject:f.value];
+    for (NSInteger i = 0; i < record.fieldValues.count; i++) {
+        MXFieldValue *fv = record.fieldValues[i];
+        if (!fv.value || [fv.value isKindOfClass:[NSNull class]]) continue;
+        if ([fv.name isEqualToString:record.pkFieldValue.name]) continue;
+        sql = [sql stringByAppendingFormat:@"'%@' = ?,", fv.name];
+        [argArray addObject:fv.value];
     }
     if ([sql hasSuffix:@","]) sql = [sql substringToIndex:sql.length - 1];
-    sql = [sql stringByAppendingFormat:@" WHERE \"%@\" = ?",field.name];
-    [argArray addObject:field.value];
-    [db executeUpdate:sql withArgumentsInArray:argArray];
-    return idx;
+    sql = [sql stringByAppendingFormat:@" WHERE \"%@\" = ?", record.pkFieldValue.name];
+    [argArray addObject:record.pkFieldValue.value];
+    return [db executeUpdate:sql withArgumentsInArray:argArray];
 }
 
 //数据是否已存在
-- (int64_t)table:(MXTable *)table didExist:(MXField *)field db:(FMDatabase *)db
+- (BOOL)recordDidExists:(MXRecord *)record db:(FMDatabase *)db
 {
-    int64_t idx = 0;
-    NSString *sql = [NSString stringWithFormat:@"SELECT (\"%@\") from '%@' WHERE \"%@\" = ?" , IDX_FIELD_NAME, table.name, field.name];
-    FMResultSet *rs = [db executeQuery:sql,field.value];
-    while ([rs next]) {
-        idx = [rs longLongIntForColumn:IDX_FIELD_NAME];
-    }
+    MXTable *table = record.table;
+    NSString *sql = [NSString stringWithFormat:@"SELECT (\"%@\") from '%@' WHERE \"%@\" = ?" , table.pkField.name, table.name, table.pkField.name];
+    [db setLogsErrors:NO];
+    FMResultSet *rs = [db executeQuery:sql, record.pkFieldValue.value];
+    [db setLogsErrors:YES];
+    BOOL exists = [rs next];
     [rs close];
-    return idx;
+    return exists;
 }
 
 //无条件强势插入
-- (int64_t)insert:(MXTable *)table excludeIdx:(BOOL)eidx inDB:(FMDatabase *)db
+- (BOOL)insert:(MXRecord *)record db:(FMDatabase *)db
 {
+    MXTable *table = record.table;
     NSString *sql = [NSString stringWithFormat:@"INSERT OR IGNORE INTO '%@' (",table.name];
     NSString *vFlag = @" VALUES (";
     NSMutableArray *argArray = [NSMutableArray new];
-    for (int i = 0; i < table.fields.count; i++) {
-        MXField *field = [table.fields objectAtIndex:i];
-        id value = field.value;
-        if (!value || [value isKindOfClass:[NSNull class]]) continue;
-        if ([field.name isEqualToString:IDX_FIELD_NAME]) {
-            if ([value longLongValue] <= 0 || eidx) continue;
+    for (int i = 0; i < record.fieldValues.count; i++) {
+        MXFieldValue *fv = record.fieldValues[i];
+        if (!fv.value || [fv.value isKindOfClass:[NSNull class]]) continue;
+        if ([fv.name isEqualToString:record.pkFieldValue.name]) {
+            if ([fv.type isEqualToString:MXTInt] || [fv.type isEqualToString:MXTLong] || [fv.type isEqualToString:MXTNumber]) {
+                long long val = [fv.value longLongValue];
+                if (val == 0) continue;
+            }
         }
-        sql = [sql stringByAppendingFormat:@"'%@',", field.name];
+        sql = [sql stringByAppendingFormat:@"'%@',", fv.name];
         vFlag = [vFlag stringByAppendingFormat:@"?,"];
-        [argArray addObject:value];
+        [argArray addObject:fv.value];
     }
     if ([sql hasSuffix:@","]) sql = [sql substringToIndex:sql.length - 1];
     if ([vFlag hasSuffix:@","]) vFlag = [vFlag substringToIndex:vFlag.length - 1];
     sql = [sql stringByAppendingString:@")"];
     vFlag = [vFlag stringByAppendingString:@")"];
     sql = [sql stringByAppendingString:vFlag];
-    [db executeUpdate:sql withArgumentsInArray:argArray];
-    return [db lastInsertRowId];;
+    return [db executeUpdate:sql withArgumentsInArray:argArray];
 }
 
 #pragma mark
 #pragma mark === query ===
 
-- (NSArray *)fresh:(MXTable *)table condition:(NSString *)conditionString
-{
-    if (!table) return nil;
-    __block NSArray *result;
-    [self.freshQueue inDatabase:^(FMDatabase *db) {
-        result = [self query:table include:nil inDB:db condition:conditionString];
-    }];
-    return result;
-}
-
-- (NSArray *)query:(MXTable *)table include:(NSArray *)fields condition:(NSString *)conditionString
+- (NSArray *)query:(MXTable *)table fields:(NSArray *)fields condition:(NSString *)conditionString
 {
     if (!table) return nil;
     __block NSArray *result;
     [self.queryQueue inDatabase:^(FMDatabase *db) {
-        result = [self query:table include:fields inDB:db condition:conditionString];
+        result = [self query:table fields:fields condition:conditionString db:db];
     }];
     return result;
 }
 
 //查询
-- (NSArray *)query:(MXTable *)table include:(NSArray *)fields inDB:(FMDatabase *)db condition:(NSString *)conditionString
+- (NSArray *)query:(MXTable *)table fields:(NSArray *)fields condition:(NSString *)conditionString db:(FMDatabase *)db
 {
-    NSMutableArray *result = [NSMutableArray new];
-
     NSInteger count = fields.count;
-    NSString *fid = @"";
-    if (!count) {
-        fid = @"*";
-    }
-    else {
-        for (int i = 0; i < count; i++) {
-            NSString *fname = fields[i];
-            NSString *fStr = (i == count - 1) ? @"" : @",";
-            fid = [fid stringByAppendingFormat:@" '%@'%@",fname,fStr];
-        }
+    NSString *fid = count ? @"" : @"*";
+    for (int i = 0; i < count; i++) {
+        NSString *fname = fields[i];
+        NSString *fStr = (i == count - 1) ? @"" : @",";
+        fid = [fid stringByAppendingFormat:@" '%@'%@",fname,fStr];
     }
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@%@",fid,table.name,conditionString ? conditionString : @""];
+    NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@%@",fid, table.name, conditionString ? conditionString : @""];
     [db setLogsErrors:NO];
     FMResultSet *rs = [db executeQuery:sql];
     [db setLogsErrors:YES];
+    
+    NSMutableArray *results = [NSMutableArray new];
     while ([rs next]) {
-        NSMutableArray *fields = [NSMutableArray new];
-        for (int i = 0; i < [rs columnCount]; i++) {
-            MXField *field = [MXField new];
-            field.name = [rs columnNameForIndex:i];
-            id value = [rs objectForColumnIndex:i];
-            field.value = value;
-            [fields addObject:field];
+        NSInteger count = [rs columnCount];
+        if (!count) continue;
+        
+        MXRecord *record = [[MXRecord alloc] initWithTable:table];
+        
+        NSMutableArray *fvs = [NSMutableArray new];
+        for (int i = 0; i < count; i++) {
+            MXFieldValue *fv = [MXFieldValue new];
+            fv.name = [rs columnNameForIndex:i];
+            fv.value = [rs objectForColumnIndex:i];
+            [fvs addObject:fv];
         }
-        if (fields) [result addObject:fields];
+        [results addObject:record];
     }
     [rs close];
-    if (!result.count) result = nil;
-    return result;
+    return results;
 }
 
 #pragma mark
 #pragma mark ==== count ====
 
 //查询数量
-- (int)count:(NSString *)table condition:(NSString *)conditionString
+- (int)count:(NSString *)tableName condition:(NSString *)conditionString
 {
     __block int count = 0;
     conditionString = conditionString ? conditionString : @"";
     [self.countQueue inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"SELECT COUNT(*) FROM %@%@",table,conditionString ? conditionString : @""];
+        NSString *sql = [NSString stringWithFormat:@"SELECT COUNT(*) FROM %@%@", tableName, conditionString ? conditionString : @""];
         [db setLogsErrors:NO];
         FMResultSet *rs = [db executeQuery:sql];
         [db setLogsErrors:YES];
@@ -372,11 +356,11 @@
 #pragma mark ==== delete ====
 
 //删除
-- (BOOL)delete:(NSString *)table condition:(NSString *)conditionString
+- (BOOL)delete:(NSString *)tableName condition:(NSString *)conditionString
 {
     __block BOOL success = NO;
     [self.deleteQueue inDatabase:^(FMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@%@",table,conditionString ? conditionString : @""];
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@%@", tableName, conditionString ? conditionString : @""];
         success = [db executeUpdate:sql];
     }];
     return success;

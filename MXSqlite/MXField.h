@@ -26,8 +26,15 @@
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *type;
+
++ (instancetype)defaultPkField;
+
+@end
+
+@interface MXFieldValue : MXField
+
 @property (nonatomic, strong) id value;
 
-+ (instancetype)pkField;
++ (instancetype)instanceWithField:(MXField *)field;
 
 @end

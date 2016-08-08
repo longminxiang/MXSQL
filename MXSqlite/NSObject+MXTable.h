@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MXTable.h"
+#import "MXSqlite.h"
 
 @protocol MXSqliteProtocal <NSObject>
 
@@ -17,17 +18,16 @@
 
 @end
 
-@interface NSObject (MXTable)<MXSqliteProtocal>
+@interface NSObject (MXTable)
 
 @property (nonatomic, assign) int64_t mxsql_id;
 
-+ (NSArray *)mxsql_fields;
-- (NSArray *)mxsql_fields;
-
-+ (MXField *)mxsql_fieldWithName:(NSString *)fname;
-- (MXField *)mxsql_fieldWithName:(NSString *)fname;
-
 + (MXTable *)mxsql_table;
-- (MXTable *)mxsql_table;
+
+- (MXRecord *)mxsql_record;
+
+@end
+
+@interface NSObject (MXSqlite)
 
 @end

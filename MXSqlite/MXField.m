@@ -11,12 +11,28 @@
 
 @implementation MXField
 
-+ (instancetype)pkField
++ (instancetype)defaultPkField
 {
-    MXField *field = [MXField new];
-    field.name = IDX_FIELD_NAME;
-    field.type = MXTLong;
+    static MXField *field;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        field = [MXField new];
+        field.name = IDX_FIELD_NAME;
+        field.type = MXTLong;
+    });
     return field;
+}
+
+@end
+
+@implementation MXFieldValue
+
++ (instancetype)instanceWithField:(MXField *)field
+{
+    MXFieldValue *fv = [MXFieldValue new];
+    fv.name = field.name;
+    fv.type = field.type;
+    return fv;
 }
 
 - (NSString *)description
