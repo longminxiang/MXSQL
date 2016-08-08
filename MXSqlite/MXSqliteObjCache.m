@@ -33,6 +33,7 @@
 {
     if (self = [super init]) {
         _fieldsCache = [NSMutableDictionary new];
+        _tableCache = [NSMutableDictionary new];
     }
     return self;
 }

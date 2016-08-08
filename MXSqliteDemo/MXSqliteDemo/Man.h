@@ -5,9 +5,10 @@
 //  Copyright (c) 2013年 longminxiang. All rights reserved.
 //
 
-#import "MXSqliteObject.h"
+#import <Foundation/Foundation.h>
+#import <NSObject+MXTable.h>
 
-@interface Man : MXSqliteObject
+@interface Man : NSObject<MXSqliteProtocal>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) int age;

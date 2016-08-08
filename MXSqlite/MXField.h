@@ -18,7 +18,7 @@
 #define MXTLong     @"integer"
 #define MXTData     @"blob"
 
-#define IDX_FIELD_NAME  @"idx"
+#define IDX_FIELD_NAME  @"mxsql_id"
 
 #pragma mark === MXField ===
 

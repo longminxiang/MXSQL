@@ -1,0 +1,21 @@
+PODS:
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - MXSqlite (0.1.1):
+    - FMDB (~> 2.5)
+
+DEPENDENCIES:
+  - MXSqlite (from `../`)
+
+EXTERNAL SOURCES:
+  MXSqlite:
+    :path: ../
+
+SPEC CHECKSUMS:
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  MXSqlite: 35e7370220030e83a38b29aaa57b7fa783572d60
+
+PODFILE CHECKSUM: 13f8285d1666741664a28ad8040f68ba1b430d82
+
+COCOAPODS: 1.0.1

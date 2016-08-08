@@ -2,9 +2,6 @@
 xcuserdata
 *.xcworkspace
 !default.xcworkspace
-MXSqliteDemo/MXSqliteDemo.xcworkspace
-MXSqliteDemo/Pods
-MXSqliteDemo/Podfile.lock
 UserInterfaceState.xcuserstate
 contents.xcworkspacedata
 xcschememanagement.plist

@@ -7,6 +7,19 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, MXSqliteConditionType)
+{
+    equal = 0,
+    less = 1,
+    greater = 2,
+};
+
+typedef NS_ENUM(NSInteger, MXSqliteConditionOrder)
+{
+    des = 0,
+    asc = 1,
+};
+
 @interface MXCondition : NSObject
 
 @property (nonatomic, assign) BOOL isOr;

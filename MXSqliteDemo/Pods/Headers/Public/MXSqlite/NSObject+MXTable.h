@@ -1,0 +1,1 @@
+../../../../../MXSqlite/NSObject+MXTable.h

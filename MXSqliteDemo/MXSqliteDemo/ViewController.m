@@ -29,25 +29,32 @@
 
 - (void)buttonTouched:(id)sender
 {
-        NSMutableArray *array = [NSMutableArray new];
-        for (int i = 0; i < 100; i++) {
-            Man *diaosi = [Man new];
-            diaosi.idx = (i + 8) % 9 + 1;
-            diaosi.name = [NSString stringWithFormat:@"san%d", i % 15];
-            diaosi.age = i;
-            diaosi.gfs = NO;
-            diaosi.brithday = [NSDate date];
-            diaosi.xxx = i+2;
-            diaosi.nick = @"ssss";
-            diaosi.nick2 = @"ssss";
-            diaosi.nick1 = @"ssss";
-            [array addObject:diaosi];
-        }
-        [Man save:array completion:^{
-            for (Man *man in array) {
-                NSLog(@"%@", [man fields]);
-            }
-        }];
+    Man *diaosi = [Man new];
+    diaosi.name = @"sandy";
+    diaosi.gfs = NO;
+    diaosi.brithday = [NSDate date];
+    diaosi.nick = @"ssss";
+    diaosi.nick2 = @"ssss";
+    diaosi.nick1 = @"ssss";
+    [diaosi mxsql_save];
+//        NSMutableArray *array = [NSMutableArray new];
+//        for (int i = 0; i < 100; i++) {
+//            Man *diaosi = [Man new];
+//            diaosi.name = [NSString stringWithFormat:@"san%d", i % 15];
+//            diaosi.age = i;
+//            diaosi.gfs = NO;
+//            diaosi.brithday = [NSDate date];
+//            diaosi.xxx = i+2;
+//            diaosi.nick = @"ssss";
+//            diaosi.nick2 = @"ssss";
+//            diaosi.nick1 = @"ssss";
+//            [array addObject:diaosi];
+//        }
+//        [Man save:array completion:^{
+//            for (Man *man in array) {
+//                NSLog(@"%@", [man fields]);
+//            }
+//        }];
     
     //    [Man queryAll:^(NSArray *objects) {
     //        for (Man *man in objects) {
@@ -62,21 +69,21 @@
 //    [m freshWithKeyField];
 //    NSLog(@"%@", [m fields]);
     
-    [Man query:^(MXSqliteQuery *query) {
-        
-    }];
-    
-    [Man query:^(MXSqliteQuery *query) {
-        query.c(@"xxx", greater, @(6));
-        query.c(@"yyy", equal, @"eee");
-        query.o(des);
-    } completion:^(NSArray *objs) {
-        
-    }];
-    
-    [Man query:nil completion:^(NSArray *objs) {
-        
-    }];
+//    [Man query:^(MXSqliteQuery *query) {
+//        
+//    }];
+//    
+//    [Man query:^(MXSqliteQuery *query) {
+//        query.c(@"xxx", greater, @(6));
+//        query.c(@"yyy", equal, @"eee");
+//        query.o(des);
+//    } completion:^(NSArray *objs) {
+//        
+//    }];
+//    
+//    [Man query:nil completion:^(NSArray *objs) {
+//        
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
