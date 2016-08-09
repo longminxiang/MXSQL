@@ -7,30 +7,59 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		077F0A2D1D5989DC00CE26E4 /* MXCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A241D5989DC00CE26E4 /* MXCondition.m */; };
+		077F0A2E1D5989DC00CE26E4 /* MXSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A261D5989DC00CE26E4 /* MXSqlite.m */; };
+		077F0A2F1D5989DC00CE26E4 /* MXSqliteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A281D5989DC00CE26E4 /* MXSqliteQuery.m */; };
+		077F0A301D5989DC00CE26E4 /* MXSqliteRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A2A1D5989DC00CE26E4 /* MXSqliteRecord.m */; };
+		077F0A311D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A2C1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m */; };
+		077F0A3E1D5989E300CE26E4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A341D5989E300CE26E4 /* FMDatabase.m */; };
+		077F0A3F1D5989E300CE26E4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A361D5989E300CE26E4 /* FMDatabaseAdditions.m */; };
+		077F0A401D5989E300CE26E4 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A381D5989E300CE26E4 /* FMDatabasePool.m */; };
+		077F0A411D5989E300CE26E4 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A3A1D5989E300CE26E4 /* FMDatabaseQueue.m */; };
+		077F0A421D5989E300CE26E4 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A3D1D5989E300CE26E4 /* FMResultSet.m */; };
+		077F0A441D598A4C00CE26E4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 077F0A431D598A4C00CE26E4 /* libsqlite3.tbd */; };
 		07D31C521D55D81C00CD3141 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07D31C511D55D81C00CD3141 /* Images.xcassets */; };
 		07E8A6641B4F638800C65788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6631B4F638800C65788 /* main.m */; };
 		07E8A6671B4F638800C65788 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6661B4F638800C65788 /* AppDelegate.m */; };
 		07E8A66A1B4F638800C65788 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6691B4F638800C65788 /* ViewController.m */; };
 		07E8A6721B4F638800C65788 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07E8A6701B4F638800C65788 /* LaunchScreen.xib */; };
 		07E8A6891B4F646900C65788 /* Man.m in Sources */ = {isa = PBXBuildFile; fileRef = 07E8A6881B4F646900C65788 /* Man.m */; };
-		CDEE395F408C01201B2DE947 /* libPods-MXSqliteDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27AF38F5E89E5E778D0C5DD0 /* libPods-MXSqliteDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		077F0A231D5989DC00CE26E4 /* MXCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCondition.h; sourceTree = "<group>"; };
+		077F0A241D5989DC00CE26E4 /* MXCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCondition.m; sourceTree = "<group>"; };
+		077F0A251D5989DC00CE26E4 /* MXSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSqlite.h; sourceTree = "<group>"; };
+		077F0A261D5989DC00CE26E4 /* MXSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSqlite.m; sourceTree = "<group>"; };
+		077F0A271D5989DC00CE26E4 /* MXSqliteQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSqliteQuery.h; sourceTree = "<group>"; };
+		077F0A281D5989DC00CE26E4 /* MXSqliteQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSqliteQuery.m; sourceTree = "<group>"; };
+		077F0A291D5989DC00CE26E4 /* MXSqliteRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSqliteRecord.h; sourceTree = "<group>"; };
+		077F0A2A1D5989DC00CE26E4 /* MXSqliteRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSqliteRecord.m; sourceTree = "<group>"; };
+		077F0A2B1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MXSqliteRecord.h"; sourceTree = "<group>"; };
+		077F0A2C1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MXSqliteRecord.m"; sourceTree = "<group>"; };
+		077F0A331D5989E300CE26E4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		077F0A341D5989E300CE26E4 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		077F0A351D5989E300CE26E4 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		077F0A361D5989E300CE26E4 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		077F0A371D5989E300CE26E4 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		077F0A381D5989E300CE26E4 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		077F0A391D5989E300CE26E4 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		077F0A3A1D5989E300CE26E4 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		077F0A3B1D5989E300CE26E4 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		077F0A3C1D5989E300CE26E4 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		077F0A3D1D5989E300CE26E4 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		077F0A431D598A4C00CE26E4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		07D31C511D55D81C00CD3141 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		07E8A65E1B4F638800C65788 /* MXSqliteDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MXSqliteDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E8A6621B4F638800C65788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07E8A6631B4F638800C65788 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		07E8A6651B4F638800C65788 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		07E8A6651B4F638800C65788 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MXSqliteDemo/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		07E8A6661B4F638800C65788 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		07E8A6681B4F638800C65788 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		07E8A6691B4F638800C65788 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		07E8A6711B4F638800C65788 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		07E8A6871B4F646900C65788 /* Man.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Man.h; sourceTree = "<group>"; };
 		07E8A6881B4F646900C65788 /* Man.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Man.m; sourceTree = "<group>"; };
-		27AF38F5E89E5E778D0C5DD0 /* libPods-MXSqliteDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MXSqliteDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B58B679C3C0C8FF9962EB23 /* Pods-MXSqliteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSqliteDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo.release.xcconfig"; sourceTree = "<group>"; };
-		F2FC0BAC978FB12DED3F516A /* Pods-MXSqliteDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSqliteDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,20 +67,54 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDEE395F408C01201B2DE947 /* libPods-MXSqliteDemo.a in Frameworks */,
+				077F0A441D598A4C00CE26E4 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		077F0A221D5989DC00CE26E4 /* MXSqlite */ = {
+			isa = PBXGroup;
+			children = (
+				077F0A231D5989DC00CE26E4 /* MXCondition.h */,
+				077F0A241D5989DC00CE26E4 /* MXCondition.m */,
+				077F0A251D5989DC00CE26E4 /* MXSqlite.h */,
+				077F0A261D5989DC00CE26E4 /* MXSqlite.m */,
+				077F0A271D5989DC00CE26E4 /* MXSqliteQuery.h */,
+				077F0A281D5989DC00CE26E4 /* MXSqliteQuery.m */,
+				077F0A291D5989DC00CE26E4 /* MXSqliteRecord.h */,
+				077F0A2A1D5989DC00CE26E4 /* MXSqliteRecord.m */,
+				077F0A2B1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.h */,
+				077F0A2C1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m */,
+			);
+			name = MXSqlite;
+			path = ../../MXSqlite;
+			sourceTree = "<group>";
+		};
+		077F0A321D5989E300CE26E4 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				077F0A331D5989E300CE26E4 /* FMDatabase.h */,
+				077F0A341D5989E300CE26E4 /* FMDatabase.m */,
+				077F0A351D5989E300CE26E4 /* FMDatabaseAdditions.h */,
+				077F0A361D5989E300CE26E4 /* FMDatabaseAdditions.m */,
+				077F0A371D5989E300CE26E4 /* FMDatabasePool.h */,
+				077F0A381D5989E300CE26E4 /* FMDatabasePool.m */,
+				077F0A391D5989E300CE26E4 /* FMDatabaseQueue.h */,
+				077F0A3A1D5989E300CE26E4 /* FMDatabaseQueue.m */,
+				077F0A3B1D5989E300CE26E4 /* FMDB.h */,
+				077F0A3C1D5989E300CE26E4 /* FMResultSet.h */,
+				077F0A3D1D5989E300CE26E4 /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = SOURCE_ROOT;
+		};
 		07E8A6551B4F638800C65788 = {
 			isa = PBXGroup;
 			children = (
 				07E8A6601B4F638800C65788 /* MXSqliteDemo */,
 				07E8A65F1B4F638800C65788 /* Products */,
-				53CD2D903C6F5FEB049C507E /* Pods */,
-				89F715C0CC38BD9260ED9031 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +129,8 @@
 		07E8A6601B4F638800C65788 /* MXSqliteDemo */ = {
 			isa = PBXGroup;
 			children = (
+				077F0A321D5989E300CE26E4 /* FMDB */,
+				077F0A221D5989DC00CE26E4 /* MXSqlite */,
 				07E8A6651B4F638800C65788 /* AppDelegate.h */,
 				07E8A6661B4F638800C65788 /* AppDelegate.m */,
 				07E8A6871B4F646900C65788 /* Man.h */,
@@ -82,27 +147,11 @@
 		07E8A6611B4F638800C65788 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				077F0A431D598A4C00CE26E4 /* libsqlite3.tbd */,
 				07E8A6621B4F638800C65788 /* Info.plist */,
 				07E8A6631B4F638800C65788 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		53CD2D903C6F5FEB049C507E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F2FC0BAC978FB12DED3F516A /* Pods-MXSqliteDemo.debug.xcconfig */,
-				3B58B679C3C0C8FF9962EB23 /* Pods-MXSqliteDemo.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		89F715C0CC38BD9260ED9031 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				27AF38F5E89E5E778D0C5DD0 /* libPods-MXSqliteDemo.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,12 +161,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07E8A6811B4F638800C65788 /* Build configuration list for PBXNativeTarget "MXSqliteDemo" */;
 			buildPhases = (
-				2F3C05B1DFDB32C8E81F4DD0 /* [CP] Check Pods Manifest.lock */,
 				07E8A65A1B4F638800C65788 /* Sources */,
 				07E8A65B1B4F638800C65788 /* Frameworks */,
 				07E8A65C1B4F638800C65788 /* Resources */,
-				B126AE9550C8B855E9CA87C1 /* [CP] Embed Pods Frameworks */,
-				0371755A9E6755334CF945A0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -172,62 +218,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0371755A9E6755334CF945A0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2F3C05B1DFDB32C8E81F4DD0 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B126AE9550C8B855E9CA87C1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSqliteDemo/Pods-MXSqliteDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		07E8A65A1B4F638800C65788 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				077F0A2F1D5989DC00CE26E4 /* MXSqliteQuery.m in Sources */,
+				077F0A401D5989E300CE26E4 /* FMDatabasePool.m in Sources */,
+				077F0A421D5989E300CE26E4 /* FMResultSet.m in Sources */,
+				077F0A301D5989DC00CE26E4 /* MXSqliteRecord.m in Sources */,
 				07E8A6891B4F646900C65788 /* Man.m in Sources */,
+				077F0A411D5989E300CE26E4 /* FMDatabaseQueue.m in Sources */,
+				077F0A3E1D5989E300CE26E4 /* FMDatabase.m in Sources */,
+				077F0A311D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m in Sources */,
+				077F0A2D1D5989DC00CE26E4 /* MXCondition.m in Sources */,
 				07E8A66A1B4F638800C65788 /* ViewController.m in Sources */,
+				077F0A3F1D5989E300CE26E4 /* FMDatabaseAdditions.m in Sources */,
 				07E8A6671B4F638800C65788 /* AppDelegate.m in Sources */,
+				077F0A2E1D5989DC00CE26E4 /* MXSqlite.m in Sources */,
 				07E8A6641B4F638800C65788 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,7 +337,6 @@
 		};
 		07E8A6821B4F638800C65788 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2FC0BAC978FB12DED3F516A /* Pods-MXSqliteDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
@@ -342,7 +349,6 @@
 		};
 		07E8A6831B4F638800C65788 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B58B679C3C0C8FF9962EB23 /* Pods-MXSqliteDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";

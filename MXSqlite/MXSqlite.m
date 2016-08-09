@@ -132,33 +132,34 @@
 #pragma mark === current db ===
 
 //创建表
-- (void)createTable:(MXTable *)table db:(FMDatabase *)db
+- (void)createTable:(MXSqliteRecord *)table db:(FMDatabase *)db
 {
     if ([[self.dbCaches allKeys] containsObject:table.name]) return;
     
     NSMutableArray *fieldNames = [NSMutableArray new];
-    NSArray *fields = table.fields;
-    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS '%@' (",table.name];
-    for (int i = 0; i < fields.count; i++) {
-        MXField *field = fields[i];
-        NSString *fstr = (i == fields.count - 1) ? @")" : @",";
+    
+    __block NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS '%@' (",table.name];
+    __block int i = 0;
+    [table.fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
+        NSString *fstr = (i == table.fields.count - 1) ? @")" : @",";
         NSString *pstr = @"";
-        if ([field.name isEqualToString:table.pkField.name]) {
+        if ([table checkPkField:field]) {
             pstr = @" PRIMARY KEY";
-            if ([field.type isEqualToString:MXTInt] || [field.type isEqualToString:MXTLong]) {
+            if (field.type == MXSqliteIntegerField) {
                 pstr = [pstr stringByAppendingString:@" AUTOINCREMENT"];
             }
         }
-        sql = [sql stringByAppendingFormat:@"'%@' %@%@%@", field.name, field.type, pstr,fstr];
-        [fieldNames addObject:field.name];
-    }
+        sql = [sql stringByAppendingFormat:@"'%@' %@%@%@", key, field.typeString, pstr,fstr];
+        [fieldNames addObject:key];
+        i++;
+    }];
     if ([db executeUpdate:sql] && fieldNames.count) {
         [self.dbCaches setObject:fieldNames forKey:table.name];
     }
 }
 
 //更新表
-- (void)updateTable:(MXTable *)table db:(FMDatabase *)db
+- (void)updateTable:(MXSqliteRecord *)table db:(FMDatabase *)db
 {
     NSArray *oldFields = [self.dbCaches objectForKey:table.name];
     
@@ -169,31 +170,32 @@
     }
     
     //判断是否有新增的列
-    NSMutableArray *noFields = [NSMutableArray new];
-    for (MXField *field in table.fields) {
+    NSMutableDictionary *noFields = [NSMutableDictionary new];
+    [table.fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
         BOOL has = NO;
         for (NSString *name in oldFields) {
-            if ([field.name isEqualToString:name]) {
+            if ([key isEqualToString:name]) {
                 has = YES;break;
             }
         }
-        if (!has) [noFields addObject:field];
-    }
+        if (!has) noFields[key] = field;
+    }];
+    
     if (!noFields.count) return;
     
     NSMutableArray *newFields = [NSMutableArray arrayWithArray:oldFields];
-    //更新
-    for (int i = 0; i < noFields.count; i++) {
-        MXField *field = [noFields objectAtIndex:i];
-        NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN '%@' %@",table.name, field.name, field.type];
+    
+    [noFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
+        NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN '%@' %@",table.name, key, field.typeString];
         if ([db executeUpdate:sql]) {
-            [newFields addObject:field.name];
+            [newFields addObject:key];
         }
-    }
+    }];
+    
     [self.dbCaches setObject:newFields forKey:table.name];
 }
 
-- (void)createOrUpdateTable:(MXTable *)table db:(FMDatabase *)db
+- (void)createOrUpdateTable:(MXSqliteRecord *)table db:(FMDatabase *)db
 {
     [self createTable:table db:db];
     [self updateTable:table db:db];
@@ -203,13 +205,13 @@
 #pragma mark === save or update ===
 
 //保存
-- (BOOL)save:(MXRecord *)record
+- (BOOL)save:(MXSqliteRecord *)record
 {
     if (!record) return NO;
-    __block success = NO;
+    __block BOOL success = NO;
     [self.saveQueue inDatabase:^(FMDatabase *db) {
         
-        [self createOrUpdateTable:record.table db:db];
+        [self createOrUpdateTable:record db:db];
         
         BOOL exist = [self recordDidExists:record db:db];
         if (exist) {
@@ -223,31 +225,31 @@
 }
 
 //更新
-- (BOOL)update:(MXRecord *)record db:(FMDatabase *)db
+- (BOOL)update:(MXSqliteRecord *)record db:(FMDatabase *)db
 {
-    NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' SET ", record.table.name];
-    
+    __block NSString *sql = [NSString stringWithFormat:@"UPDATE '%@' SET ", record.name];
     NSMutableArray *argArray = [NSMutableArray new];
-    for (NSInteger i = 0; i < record.fieldValues.count; i++) {
-        MXFieldValue *fv = record.fieldValues[i];
-        if (!fv.value || [fv.value isKindOfClass:[NSNull class]]) continue;
-        if ([fv.name isEqualToString:record.pkFieldValue.name]) continue;
-        sql = [sql stringByAppendingFormat:@"'%@' = ?,", fv.name];
-        [argArray addObject:fv.value];
-    }
+    [record.fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
+        BOOL isNil = !field.value || [field.value isKindOfClass:[NSNull class]];
+        BOOL isPk = [record checkPkField:field];
+        if (!isNil && !isPk) {
+            sql = [sql stringByAppendingFormat:@"'%@' = ?,", key];
+            [argArray addObject:field.value];
+        }
+    }];
+
     if ([sql hasSuffix:@","]) sql = [sql substringToIndex:sql.length - 1];
-    sql = [sql stringByAppendingFormat:@" WHERE \"%@\" = ?", record.pkFieldValue.name];
-    [argArray addObject:record.pkFieldValue.value];
+    sql = [sql stringByAppendingFormat:@" WHERE \"%@\" = ?", record.pkField.name];
+    [argArray addObject:record.pkField.value];
     return [db executeUpdate:sql withArgumentsInArray:argArray];
 }
 
 //数据是否已存在
-- (BOOL)recordDidExists:(MXRecord *)record db:(FMDatabase *)db
+- (BOOL)recordDidExists:(MXSqliteRecord *)record db:(FMDatabase *)db
 {
-    MXTable *table = record.table;
-    NSString *sql = [NSString stringWithFormat:@"SELECT (\"%@\") from '%@' WHERE \"%@\" = ?" , table.pkField.name, table.name, table.pkField.name];
+    NSString *sql = [NSString stringWithFormat:@"SELECT (\"%@\") from '%@' WHERE \"%@\" = ?" , record.pkField.name, record.name, record.pkField.name];
     [db setLogsErrors:NO];
-    FMResultSet *rs = [db executeQuery:sql, record.pkFieldValue.value];
+    FMResultSet *rs = [db executeQuery:sql, record.pkField.value];
     [db setLogsErrors:YES];
     BOOL exists = [rs next];
     [rs close];
@@ -255,25 +257,26 @@
 }
 
 //无条件强势插入
-- (BOOL)insert:(MXRecord *)record db:(FMDatabase *)db
+- (BOOL)insert:(MXSqliteRecord *)record db:(FMDatabase *)db
 {
-    MXTable *table = record.table;
-    NSString *sql = [NSString stringWithFormat:@"INSERT OR IGNORE INTO '%@' (",table.name];
-    NSString *vFlag = @" VALUES (";
+    __block NSString *sql = [NSString stringWithFormat:@"INSERT OR IGNORE INTO '%@' (", record.name];
+    __block NSString *vFlag = @" VALUES (";
     NSMutableArray *argArray = [NSMutableArray new];
-    for (int i = 0; i < record.fieldValues.count; i++) {
-        MXFieldValue *fv = record.fieldValues[i];
-        if (!fv.value || [fv.value isKindOfClass:[NSNull class]]) continue;
-        if ([fv.name isEqualToString:record.pkFieldValue.name]) {
-            if ([fv.type isEqualToString:MXTInt] || [fv.type isEqualToString:MXTLong] || [fv.type isEqualToString:MXTNumber]) {
-                long long val = [fv.value longLongValue];
-                if (val == 0) continue;
+    [record.fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
+        BOOL isNil = !field.value || [field.value isKindOfClass:[NSNull class]];
+        if (!isNil) {
+            BOOL ignore = NO;
+            if ([record checkPkField:field] && field.type == MXSqliteIntegerField) {
+                long long val = [field.value longLongValue];
+                ignore = val == 0;
+            }
+            if (!ignore) {
+                sql = [sql stringByAppendingFormat:@"'%@',", key];
+                vFlag = [vFlag stringByAppendingFormat:@"?,"];
+                [argArray addObject:field.value];
             }
         }
-        sql = [sql stringByAppendingFormat:@"'%@',", fv.name];
-        vFlag = [vFlag stringByAppendingFormat:@"?,"];
-        [argArray addObject:fv.value];
-    }
+    }];
     if ([sql hasSuffix:@","]) sql = [sql substringToIndex:sql.length - 1];
     if ([vFlag hasSuffix:@","]) vFlag = [vFlag substringToIndex:vFlag.length - 1];
     sql = [sql stringByAppendingString:@")"];
@@ -285,18 +288,18 @@
 #pragma mark
 #pragma mark === query ===
 
-- (NSArray *)query:(MXTable *)table fields:(NSArray *)fields condition:(NSString *)conditionString
+- (NSArray *)query:(NSString *)tableName fields:(NSArray *)fields condition:(NSString *)conditionString
 {
-    if (!table) return nil;
+    if (!tableName) return nil;
     __block NSArray *result;
     [self.queryQueue inDatabase:^(FMDatabase *db) {
-        result = [self query:table fields:fields condition:conditionString db:db];
+        result = [self query:tableName fields:fields condition:conditionString db:db];
     }];
     return result;
 }
 
 //查询
-- (NSArray *)query:(MXTable *)table fields:(NSArray *)fields condition:(NSString *)conditionString db:(FMDatabase *)db
+- (NSArray *)query:(NSString *)tableName fields:(NSArray *)fields condition:(NSString *)conditionString db:(FMDatabase *)db
 {
     NSInteger count = fields.count;
     NSString *fid = count ? @"" : @"*";
@@ -306,29 +309,28 @@
         fid = [fid stringByAppendingFormat:@" '%@'%@",fname,fStr];
     }
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@%@",fid, table.name, conditionString ? conditionString : @""];
+    NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@%@",fid, tableName, conditionString ? conditionString : @""];
     [db setLogsErrors:NO];
     FMResultSet *rs = [db executeQuery:sql];
     [db setLogsErrors:YES];
     
-    NSMutableArray *results = [NSMutableArray new];
+    NSMutableArray *records = [NSMutableArray new];
     while ([rs next]) {
         NSInteger count = [rs columnCount];
         if (!count) continue;
-        
-        MXRecord *record = [[MXRecord alloc] initWithTable:table];
-        
-        NSMutableArray *fvs = [NSMutableArray new];
+        MXSqliteRecord *record = [MXSqliteRecord new];
+        record.name = tableName;
+        record.fields = [NSMutableDictionary new];
         for (int i = 0; i < count; i++) {
-            MXFieldValue *fv = [MXFieldValue new];
-            fv.name = [rs columnNameForIndex:i];
-            fv.value = [rs objectForColumnIndex:i];
-            [fvs addObject:fv];
+            MXSqliteField *field = [MXSqliteField new];
+            field.name = [rs columnNameForIndex:i];
+            field.value = [rs objectForColumnIndex:i];
+            record.fields[field.name] = field;
         }
-        [results addObject:record];
+        [records addObject:record];
     }
     [rs close];
-    return results;
+    return records;
 }
 
 #pragma mark

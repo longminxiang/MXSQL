@@ -10,7 +10,7 @@
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
-#import "MXTable.h"
+#import "MXSqliteRecord.h"
 
 @interface MXSqlite : NSObject
 
@@ -22,10 +22,10 @@
 - (void)setDbPath:(NSString *)path directory:(NSSearchPathDirectory)directory;
 
 //保存
-- (BOOL)save:(MXRecord *)record;
+- (BOOL)save:(MXSqliteRecord *)record;
 
 //查询
-- (NSArray *)query:(MXTable *)table fields:(NSArray *)fields condition:(NSString *)conditionString;
+- (NSArray *)query:(NSString *)tableName fields:(NSArray *)fields condition:(NSString *)conditionString;
 
 //查询数量
 - (int)count:(NSString *)tableName condition:(NSString *)conditionString;

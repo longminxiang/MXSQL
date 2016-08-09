@@ -7,15 +7,30 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MXCondition.h"
+
+typedef NS_ENUM(NSInteger, MXSqliteQueryOperator)
+{
+    MXSqliteQueryOperatorEqual = 1,
+    MXSqliteQueryOperatorLess,
+    MXSqliteQueryOperatorGreater,
+    MXSqliteQueryOperatorNotEqual,
+    MXSqliteQueryOperatorLessOrEqual,
+    MXSqliteQueryOperatorGreaterOrEqual,
+};
+
+typedef NS_ENUM(NSInteger, MXSqliteQuerySort)
+{
+    MXSqliteQuerySortAscending = 1,
+    MXSqliteQuerySortDescending = 2,
+};
 
 @interface MXSqliteQuery : NSObject
 
-typedef MXSqliteQuery* (^MXSqliteConditionBlock)(NSString *key, MXSqliteConditionType type, id val);
-typedef MXSqliteQuery* (^MXSqliteConditionOrderBlock)(MXSqliteConditionOrder order);
+typedef MXSqliteQuery* (^MXSqliteQueryOperatorBlock)(NSString *key, MXSqliteQueryOperator op, id val);
+typedef MXSqliteQuery* (^MXSqliteQuerySortBlock)(MXSqliteQuerySort sort);
 
-@property (nonatomic, readonly) MXSqliteConditionBlock c;
+@property (nonatomic, readonly) MXSqliteQueryOperatorBlock op;
 
-@property (nonatomic, readonly) MXSqliteConditionOrderBlock o;
+@property (nonatomic, readonly) MXSqliteQuerySortBlock st;
 
 @end

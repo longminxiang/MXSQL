@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NSObject+MXTable.h>
+#import "NSObject+MXSqliteRecord.h"
 
 @interface Man : NSObject<MXSqliteProtocal>
 

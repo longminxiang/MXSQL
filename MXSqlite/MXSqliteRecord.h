@@ -53,4 +53,6 @@ FOUNDATION_EXPORT NSString *const MXSqliteDefaultPkFieldName;
 
 - (instancetype)clone;
 
+- (BOOL)checkPkField:(MXSqliteField *)field;
+
 @end

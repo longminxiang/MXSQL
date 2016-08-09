@@ -17,7 +17,6 @@ NSString *const MXSqliteDefaultPkFieldName = @"mxsql_id";
     MXSqliteField *field = [MXSqliteField new];
     field.name = self.name;
     field.type = self.type;
-    field.value = self.value;
     return field;
 }
 
@@ -67,11 +66,17 @@ NSString *const MXSqliteDefaultPkFieldName = @"mxsql_id";
     MXSqliteRecord *record = [MXSqliteRecord new];
     record.name = self.name;
     record.pkField = [self.pkField clone];
-    NSMutableDictionary *dic = [NSMutableDictionary new];
-    [record.fields enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, MXSqliteField *field, BOOL * _Nonnull stop) {
-        dic[key] = [field clone];
+    NSMutableDictionary *fields = [NSMutableDictionary new];
+    [self.fields enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, MXSqliteField *field, BOOL * _Nonnull stop) {
+        fields[key] = [field clone];
     }];
+    record.fields = fields;
     return record;
+}
+
+- (BOOL)checkPkField:(MXSqliteField *)field
+{
+    return [field.name isEqualToString:self.pkField.name];
 }
 
 @end

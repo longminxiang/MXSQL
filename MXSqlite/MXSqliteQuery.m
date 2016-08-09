@@ -10,18 +10,18 @@
 
 @implementation MXSqliteQuery
 
-- (MXSqliteConditionBlock)c
-{
-    return ^MXSqliteQuery *(NSString *key, MXSqliteConditionType type, id val) {
-        return self;
-    };
-}
-
-- (MXSqliteConditionOrderBlock)o
-{
-    return ^MXSqliteQuery *(MXSqliteConditionOrder order) {
-        return self;
-    };
-}
+//- (MXSqliteConditionBlock)c
+//{
+//    return ^MXSqliteQuery *(NSString *key, MXSqliteConditionType type, id val) {
+//        return self;
+//    };
+//}
+//
+//- (MXSqliteConditionOrderBlock)o
+//{
+//    return ^MXSqliteQuery *(MXSqliteConditionOrder order) {
+//        return self;
+//    };
+//}
 
 @end
