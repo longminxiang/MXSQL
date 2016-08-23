@@ -27,10 +27,19 @@ typedef NS_ENUM(NSInteger, MXSqliteQuerySort)
 @interface MXSqliteQuery : NSObject
 
 typedef MXSqliteQuery* (^MXSqliteQueryOperatorBlock)(NSString *key, MXSqliteQueryOperator op, id val);
-typedef MXSqliteQuery* (^MXSqliteQuerySortBlock)(MXSqliteQuerySort sort);
 
-@property (nonatomic, readonly) MXSqliteQueryOperatorBlock op;
+typedef MXSqliteQuery* (^MXSqliteQuerySortBlock)(NSString *key, MXSqliteQuerySort sort);
 
-@property (nonatomic, readonly) MXSqliteQuerySortBlock st;
+typedef MXSqliteQuery* (^MXSqliteQueryLimitBlock)(NSInteger begin,  NSInteger count);
+
+@property (nonatomic, readonly) MXSqliteQueryOperatorBlock operate;
+
+@property (nonatomic, readonly) MXSqliteQueryOperatorBlock orOperate;
+
+@property (nonatomic, readonly) MXSqliteQuerySortBlock sort;
+
+@property (nonatomic, readonly) MXSqliteQueryLimitBlock limit;
+
+- (NSString *)queryString;
 
 @end

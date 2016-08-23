@@ -35,7 +35,7 @@
 
 @interface NSObject (MXSqliteQuery)
 
-typedef void (^MXSqliteQueryBlock)(MXSqliteQuery *query);
+typedef void (^MXSqliteQueryBlock)(MXSqliteQuery *q);
 
 typedef void (^MXSqliteArrayBlock)(NSArray *objs);
 

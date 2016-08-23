@@ -306,7 +306,7 @@
     for (int i = 0; i < count; i++) {
         NSString *fname = fields[i];
         NSString *fStr = (i == count - 1) ? @"" : @",";
-        fid = [fid stringByAppendingFormat:@" '%@'%@",fname,fStr];
+        fid = [fid stringByAppendingFormat:@" %@%@", fname, fStr];
     }
     
     NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@%@",fid, tableName, conditionString ? conditionString : @""];

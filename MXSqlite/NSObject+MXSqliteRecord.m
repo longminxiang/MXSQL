@@ -160,7 +160,6 @@
                 record.fields[record.pkField.name] = record.pkField;
             }
             [[MXSqliteRecordCache instance] cacheTable:record forClass:cls];
-            
         }
         obj = [record clone];
         objc_setAssociatedObject(self, _cmd, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -197,7 +196,7 @@
                 valField.value = [NSDate dateWithTimeIntervalSince1970:time];
             }
             @try {
-                [self setValue:val forKey:field.name];
+                [obj setValue:val forKey:field.name];
             }
             @catch (NSException *exception) {
             }
@@ -208,15 +207,22 @@
 
 + (NSArray *)query:(MXSqliteQueryBlock)block
 {
-    return nil;
+    MXSqliteQuery *query = [MXSqliteQuery new];
+    if (block) block(query);
+    NSArray *objs = [self queryFields:nil condition:query.queryString];
+    return objs;
 }
 
 + (void)query:(MXSqliteQueryBlock)block completion:(MXSqliteArrayBlock)completion
 {
     MXSqliteQuery *query = [MXSqliteQuery new];
     if (block) block(query);
-    //    NSArray *array = [[MXSqlite objInstance] query:[self table] include:fnames condition:condition];
-    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *objs = [self queryFields:nil condition:query.queryString];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) completion(objs);
+        });
+    });
 }
 
 + (NSArray *)queryFields:(NSArray *)fields condition:(NSString *)condition

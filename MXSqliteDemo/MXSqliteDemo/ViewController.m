@@ -29,14 +29,14 @@
 
 - (void)buttonTouched:(id)sender
 {
-    Man *diaosi = [Man new];
-    diaosi.name = @"sandy";
-    diaosi.gfs = NO;
-    diaosi.brithday = [NSDate date];
-    diaosi.nick = @"ssss";
-    diaosi.nick2 = @"ssss";
-    diaosi.nick1 = @"ssss";
-    [diaosi mxsql_save];
+//    Man *diaosi = [Man new];
+//    diaosi.name = @"sandy";
+//    diaosi.gfs = NO;
+//    diaosi.brithday = [NSDate date];
+//    diaosi.nick = @"ssss";
+//    diaosi.nick2 = @"ssss";
+//    diaosi.nick1 = @"ssss";
+//    [diaosi mxsql_save];
 //        NSMutableArray *array = [NSMutableArray new];
 //        for (int i = 0; i < 100; i++) {
 //            Man *diaosi = [Man new];
@@ -69,8 +69,13 @@
 //    [m freshWithKeyField];
 //    NSLog(@"%@", [m fields]);
     
-    [Man query:^(MXSqliteQuery *query) {
-        query.op(@"xxx", MXSqliteQueryOperatorEqual, @(5));
+    [Man query:^(MXSqliteQuery *q) {
+        q.operate(MXSqliteDefaultPkFieldName, MXSqliteQueryOperatorLess, @(5));
+        q.orOperate(MXSqliteDefaultPkFieldName, MXSqliteQueryOperatorGreater, @(10));
+    } completion:^(NSArray *objs) {
+        for (Man *man in objs) {
+            NSLog(@"%lld", man.mxsql_id);
+        }
     }];
 }
 
