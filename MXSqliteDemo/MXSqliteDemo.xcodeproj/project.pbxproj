@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		077F0A2D1D5989DC00CE26E4 /* MXCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A241D5989DC00CE26E4 /* MXCondition.m */; };
 		077F0A2E1D5989DC00CE26E4 /* MXSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A261D5989DC00CE26E4 /* MXSqlite.m */; };
 		077F0A2F1D5989DC00CE26E4 /* MXSqliteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A281D5989DC00CE26E4 /* MXSqliteQuery.m */; };
 		077F0A301D5989DC00CE26E4 /* MXSqliteRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 077F0A2A1D5989DC00CE26E4 /* MXSqliteRecord.m */; };
@@ -27,8 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		077F0A231D5989DC00CE26E4 /* MXCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCondition.h; sourceTree = "<group>"; };
-		077F0A241D5989DC00CE26E4 /* MXCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCondition.m; sourceTree = "<group>"; };
 		077F0A251D5989DC00CE26E4 /* MXSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSqlite.h; sourceTree = "<group>"; };
 		077F0A261D5989DC00CE26E4 /* MXSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSqlite.m; sourceTree = "<group>"; };
 		077F0A271D5989DC00CE26E4 /* MXSqliteQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSqliteQuery.h; sourceTree = "<group>"; };
@@ -77,14 +74,12 @@
 		077F0A221D5989DC00CE26E4 /* MXSqlite */ = {
 			isa = PBXGroup;
 			children = (
-				077F0A231D5989DC00CE26E4 /* MXCondition.h */,
-				077F0A241D5989DC00CE26E4 /* MXCondition.m */,
 				077F0A251D5989DC00CE26E4 /* MXSqlite.h */,
 				077F0A261D5989DC00CE26E4 /* MXSqlite.m */,
-				077F0A271D5989DC00CE26E4 /* MXSqliteQuery.h */,
-				077F0A281D5989DC00CE26E4 /* MXSqliteQuery.m */,
 				077F0A291D5989DC00CE26E4 /* MXSqliteRecord.h */,
 				077F0A2A1D5989DC00CE26E4 /* MXSqliteRecord.m */,
+				077F0A271D5989DC00CE26E4 /* MXSqliteQuery.h */,
+				077F0A281D5989DC00CE26E4 /* MXSqliteQuery.m */,
 				077F0A2B1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.h */,
 				077F0A2C1D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m */,
 			);
@@ -231,7 +226,6 @@
 				077F0A411D5989E300CE26E4 /* FMDatabaseQueue.m in Sources */,
 				077F0A3E1D5989E300CE26E4 /* FMDatabase.m in Sources */,
 				077F0A311D5989DC00CE26E4 /* NSObject+MXSqliteRecord.m in Sources */,
-				077F0A2D1D5989DC00CE26E4 /* MXCondition.m in Sources */,
 				07E8A66A1B4F638800C65788 /* ViewController.m in Sources */,
 				077F0A3F1D5989E300CE26E4 /* FMDatabaseAdditions.m in Sources */,
 				07E8A6671B4F638800C65788 /* AppDelegate.m in Sources */,

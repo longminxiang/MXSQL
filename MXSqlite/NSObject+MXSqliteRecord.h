@@ -33,14 +33,22 @@
 
 @end
 
+@interface MXSqliteResult :NSObject
+
+@property (nonatomic, readonly) NSArray *objs;
+
+@property (nonatomic, readonly) NSInteger count;
+
+@property (nonatomic, readonly) BOOL deleted;
+
+- (void)asyncObjs:(void (^)(NSArray *objs))block;
+
+@end
+
 @interface NSObject (MXSqliteQuery)
 
 typedef void (^MXSqliteQueryBlock)(MXSqliteQuery *q);
 
-typedef void (^MXSqliteArrayBlock)(NSArray *objs);
-
-+ (NSArray *)query:(MXSqliteQueryBlock)block;
-
-+ (void)query:(MXSqliteQueryBlock)block completion:(MXSqliteArrayBlock)completion;
++ (MXSqliteResult *)query:(MXSqliteQueryBlock)block;
 
 @end

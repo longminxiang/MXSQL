@@ -31,6 +31,6 @@
 - (int)count:(NSString *)tableName condition:(NSString *)conditionString;
 
 //删除
-- (BOOL)delete:(NSString *)tableName condition:(NSString *)conditionString;
+- (BOOL)deleted:(NSString *)tableName condition:(NSString *)conditionString;
 
 @end

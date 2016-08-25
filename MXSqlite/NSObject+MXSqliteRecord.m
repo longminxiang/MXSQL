@@ -136,6 +136,29 @@
 
 @implementation NSObject (MXSqliteRecord)
 
++ (instancetype)mxsql_instanceWithRecord:(MXSqliteRecord *)record
+{
+    if (![self mxsql_isSqliteProtocal]) return nil;
+    NSObject *obj = [self new];
+    NSDictionary *fields = obj.mxsql_record.fields;
+    [fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
+        MXSqliteField *valField = record.fields[key];
+        id val = valField.value;
+        if (val && ![val isKindOfClass:[NSNull class]]) {
+            if (field.type == MXSqliteDateField) {
+                NSTimeInterval time = [val doubleValue];
+                valField.value = [NSDate dateWithTimeIntervalSince1970:time];
+            }
+            @try {
+                [obj setValue:val forKey:field.name];
+            }
+            @catch (NSException *exception) {
+            }
+        }
+    }];
+    return obj;
+}
+
 - (MXSqliteRecord *)mxsql_record
 {
     MXSqliteRecord *obj = objc_getAssociatedObject(self, _cmd);
@@ -180,61 +203,85 @@
 
 @end
 
-@implementation NSObject (MXSqliteQuery)
+@interface MXSqliteQuery (Result)
 
-+ (instancetype)mxsql_instanceWithRecord:(MXSqliteRecord *)record
+@property (nonatomic, readonly) MXSqliteResult *result;
+
+@end
+
+@implementation MXSqliteQuery (Result)
+
+- (MXSqliteResult *)result
 {
-    if (![self mxsql_isSqliteProtocal]) return nil;
-    NSObject *obj = [self new];
-    NSDictionary *fields = obj.mxsql_record.fields;
-    [fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, MXSqliteField *field, BOOL * _Nonnull stop) {
-        MXSqliteField *valField = record.fields[key];
-        id val = valField.value;
-        if (val && ![val isKindOfClass:[NSNull class]]) {
-            if (field.type == MXSqliteDateField) {
-                NSTimeInterval time = [val doubleValue];
-                valField.value = [NSDate dateWithTimeIntervalSince1970:time];
-            }
-            @try {
-                [obj setValue:val forKey:field.name];
-            }
-            @catch (NSException *exception) {
-            }
-        }
-    }];
+    id obj = objc_getAssociatedObject(self, _cmd);
+    if (!obj) {
+        obj = [MXSqliteResult new];
+        objc_setAssociatedObject(self, _cmd, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
     return obj;
 }
 
-+ (NSArray *)query:(MXSqliteQueryBlock)block
+@end
+
+@interface MXSqliteResult ()
+
+@property (nonatomic, assign) Class targetClass;
+@property (nonatomic, weak) MXSqliteQuery *query;
+
+@end
+
+@implementation MXSqliteResult
+
+- (NSArray *)objs
 {
-    MXSqliteQuery *query = [MXSqliteQuery new];
-    if (block) block(query);
-    NSArray *objs = [self queryFields:nil condition:query.queryString];
+    NSArray *records = [[MXSqlite objInstance] query:[self.targetClass mxsql_tableName] fields:nil condition:self.query.queryString];
+    NSMutableArray *objs = [NSMutableArray new];
+    for (int i = 0; i < records.count; i++) {
+        MXSqliteRecord *record = records[i];
+        id obj = [self.targetClass mxsql_instanceWithRecord:record];
+        [objs addObject:obj];
+    }
     return objs;
 }
 
-+ (void)query:(MXSqliteQueryBlock)block completion:(MXSqliteArrayBlock)completion
+- (void)asyncObjs:(void (^)(NSArray *objs))block
 {
-    MXSqliteQuery *query = [MXSqliteQuery new];
-    if (block) block(query);
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSArray *objs = [self queryFields:nil condition:query.queryString];
+        NSArray *objs = self.objs;
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) completion(objs);
+            if (block) block(objs);
         });
     });
 }
 
-+ (NSArray *)queryFields:(NSArray *)fields condition:(NSString *)condition
+- (NSInteger)count
 {
-    NSArray *records = [[MXSqlite objInstance] query:[self mxsql_tableName] fields:fields condition:condition];
-    NSMutableArray *objs = [NSMutableArray new];
-    for (int i = 0; i < records.count; i++) {
-        MXSqliteRecord *record = records[i];
-        id obj = [self mxsql_instanceWithRecord:record];
-        [objs addObject:obj];
-    }
-    return objs;
+    NSInteger count = [[MXSqlite objInstance] count:[self.targetClass mxsql_tableName] condition:self.query.queryString];
+    return count;
+
+}
+
+- (BOOL)deleted
+{
+    BOOL deleted = [[MXSqlite objInstance] deleted:[self.targetClass mxsql_tableName] condition:self.query.queryString];
+    return deleted;
+}
+
+- (void)dealloc
+{
+    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
+}
+
+@end
+
+@implementation NSObject (MXSqliteQuery)
+
++ (MXSqliteResult *)query:(MXSqliteQueryBlock)block
+{
+    MXSqliteQuery *query = [MXSqliteQuery new];
+    query.result.targetClass = self;
+    if (block) block(query);
+    return query.result;
 }
 
 @end

@@ -358,7 +358,7 @@
 #pragma mark ==== delete ====
 
 //删除
-- (BOOL)delete:(NSString *)tableName condition:(NSString *)conditionString
+- (BOOL)deleted:(NSString *)tableName condition:(NSString *)conditionString
 {
     __block BOOL success = NO;
     [self.deleteQueue inDatabase:^(FMDatabase *db) {

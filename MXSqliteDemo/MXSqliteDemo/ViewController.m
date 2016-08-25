@@ -69,14 +69,22 @@
 //    [m freshWithKeyField];
 //    NSLog(@"%@", [m fields]);
     
-    [Man query:^(MXSqliteQuery *q) {
-        q.operate(MXSqliteDefaultPkFieldName, MXSqliteQueryOperatorLess, @(5));
-        q.orOperate(MXSqliteDefaultPkFieldName, MXSqliteQueryOperatorGreater, @(10));
-    } completion:^(NSArray *objs) {
-        for (Man *man in objs) {
-            NSLog(@"%lld", man.mxsql_id);
-        }
-    }];
+
+//    [[Man query:^(MXSqliteQuery *q) {
+//        q.operate(MXSqliteDefaultPkFieldName, MXSqliteQueryOperatorLess, @(5));
+//        q.orOperate(MXSqliteDefaultPkFieldName, MXSqliteQueryOperatorGreater, @(10));
+//    }] asyncObjs:^(NSArray *objs) {
+//        for (Man *man in objs) {
+//            NSLog(@"%lld", man.mxsql_id);
+//        }
+//    }];
+    
+    MXSqliteResult *result = [Man query:nil];
+    NSArray *objs = result.objs;
+    for (Man *man in objs) {
+        NSLog(@"%lld", man.mxsql_id);
+    }
+    NSLog(@"xxxx %ld", result.count);
 }
 
 - (void)didReceiveMemoryWarning {
